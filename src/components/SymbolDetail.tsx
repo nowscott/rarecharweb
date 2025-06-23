@@ -49,16 +49,18 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
           <div className="space-y-2">
             {/* 分类信息 */}
             <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">分类</h3>
-              <div className="flex flex-wrap gap-2">
-                {symbol.category.map((cat, index) => (
-                  <span 
-                    key={index} 
-                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium"
-                  >
-                    {CATEGORY_MAP[cat] || cat}
-                  </span>
-                ))}
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">分类:</span>
+                <div className="flex flex-wrap gap-2">
+                  {symbol.category.map((cat, index) => (
+                    <span 
+                      key={index} 
+                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium"
+                    >
+                      {CATEGORY_MAP[cat] || cat}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -77,7 +79,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
             {/* 说明信息 */}
             {symbol.notes && (
               <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">说明</h3>
+                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">说明:</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{symbol.notes}</p>
               </div>
             )}
