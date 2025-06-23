@@ -85,11 +85,11 @@ export default function useSymbolData() {
   
   // 仅在symbols变化时初始化过滤
   useEffect(() => {
-    if (symbols.length > 0) {
+    if (symbols.length > 0 && !searchQuery) {
       console.log('symbols变化，初始化过滤，当前分类:', activeCategory);
       filterSymbolsByCategory(symbols, activeCategory);
     }
-  }, [symbols, activeCategory]); // 保留activeCategory依赖，确保分类变化时能正确过滤
+  }, [symbols, activeCategory, searchQuery]); // 添加searchQuery依赖，搜索时不触发分类过滤
   
   // 随机打乱数组顺序的函数
   const shuffleArray = <T>(array: T[]): T[] => {
@@ -152,6 +152,9 @@ export default function useSymbolData() {
       handleCategoryChange(activeCategory);
       return;
     }
+    
+    // 搜索时将分类重置为"全部"
+    setActiveCategory('all');
     
     const results = searchSymbols(symbols, query);
     // 搜索结果按unicode排序
