@@ -32,7 +32,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
           </div>
           
           <div className="flex flex-col items-center mb-6">
-            <div className="text-6xl mb-2">{symbol.symbol}</div>
+            <div className="text-6xl mb-2 symbol-display">{symbol.symbol}</div>
             <div className="text-lg font-medium">{symbol.name}</div>
             {symbol.pronunciation && (
               <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">

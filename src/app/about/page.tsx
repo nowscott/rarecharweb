@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import useSymbolData from '@/hooks/useSymbolData';
 
@@ -150,10 +151,14 @@ export default function About() {
             <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">联系我们</h3>
             <div className="grid grid-cols-1 gap-4">
               <a href="https://www.xiaohongshu.com/user/profile/5d40f52f000000001101ba6c?xsec_token=YBExHFaolW_sm5IScluGnf76LQ9Y4yHv13pn_qnh3e0y0=&xsec_source=app_share&xhsshare=CopyLink&appuid=5d40f52f000000001101ba6c&apptime=1750673095&share_id=9e7f80f1b072439b9e9d2a2dc46ef1cc" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                <div className="bg-red-100 dark:bg-red-900/30 w-12 h-12 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
+                <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white">
+                  <Image
+                    src="/xiaohongshu.jpg"
+                    alt="小红书"
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">小红书</h4>
@@ -161,10 +166,14 @@ export default function About() {
                 </div>
               </a>
               <a href="https://github.com/nowscott/rarecharweb" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                <div className="bg-gray-100 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
+                <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white">
+                  <Image
+                    src="/github.jpg"
+                    alt="GitHub"
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover"
+                  />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">GitHub</h4>

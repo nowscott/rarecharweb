@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://f.0211120.xyz/font/得意黑/result.css');
 
 :root {
   --background: #ffffff;
@@ -22,5 +23,23 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Smiley Sans Oblique', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}
+
+* {
+  font-family: 'Smiley Sans Oblique', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}
+
+/* 符号专用字体设置 */
+.symbol, .symbol-card, .symbol-display, [data-symbol] {
+  font-family: 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', monospace !important;
+  font-weight: normal !important;
+}
+
+/* 确保所有特殊符号都能正确显示 */
+.unicode-symbol {
+  font-family: 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', monospace !important;
+  font-weight: normal !important;
 }
