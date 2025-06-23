@@ -1,6 +1,4 @@
 'use client';
-
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import useSymbolData from '@/hooks/useSymbolData';
 
@@ -134,7 +132,7 @@ export default function About() {
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700">
                 <span className="text-gray-600 dark:text-gray-400">更新时间</span>
-                <span className="font-semibold">2025-03-26</span>
+                <span className="font-semibold">{new Date().toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-')}</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700">
                 <span className="text-gray-600 dark:text-gray-400">开发状态</span>

@@ -20,7 +20,7 @@ const betaDataUrl = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/data-beta.j
 // 获取符号数据并缓存
 export async function getSymbolData(): Promise<SymbolDataResponse> {
   // 从远程获取数据
-  const response = await fetch(betaDataUrl, { next: { revalidate: 3600 } }); // 缓存1小时
+  const response = await fetch(betaDataUrl, { next: { revalidate: 36000 } }); // 缓存10小时
   
   if (!response.ok) {
     throw new Error(`获取数据失败: ${response.status}`);
