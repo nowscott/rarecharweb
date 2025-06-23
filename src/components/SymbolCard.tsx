@@ -1,0 +1,45 @@
+import React from 'react';
+import { SymbolData } from '@/lib/symbolData';
+
+interface SymbolCardProps {
+  symbol: SymbolData | {
+    symbol: string;
+    name: string;
+  };
+  onClick?: () => void;
+}
+
+const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(symbol.symbol);
+    // 简单的视觉反馈
+    const target = e.currentTarget as HTMLElement;
+    const originalText = target.innerHTML;
+    target.innerHTML = '✓';
+    setTimeout(() => {
+      target.innerHTML = originalText;
+    }, 1000);
+  };
+
+  return (
+    <div 
+      onClick={onClick}
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col items-center justify-center cursor-pointer border border-gray-100 dark:border-gray-700 h-32 relative group"
+    >
+      <button
+        onClick={handleCopy}
+        className="absolute top-2 right-2 p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors opacity-0 group-hover:opacity-100"
+        title="复制符号"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+      </button>
+      <div className="text-4xl mb-2">{symbol.symbol}</div>
+      <div className="text-sm text-gray-600 dark:text-gray-300 text-center">{symbol.name}</div>
+    </div>
+  );
+};
+
+export default SymbolCard;
