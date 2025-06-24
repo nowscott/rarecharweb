@@ -51,7 +51,8 @@ export function useSymbolData({
         }
         
         if (data) {
-          console.log(`✅ [useSymbolData] 数据获取成功，符号数量: ${data.symbols.length}`);
+          const dataType = apiEndpoint.includes('emoji') ? '表情' : '符号';
+          console.log(`✅ [${dataType}数据] 获取成功 | 数量: ${data.symbols.length}`);
           setSymbols(data.symbols);
           setCategoryStats(data.stats?.categoryStats || []);
         } else {

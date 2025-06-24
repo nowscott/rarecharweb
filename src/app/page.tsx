@@ -1,15 +1,14 @@
 'use client';
 
 import React from 'react';
-import { useSymbolData } from '@/hooks/useSymbolData';
+import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import HomeClient from '@/components/HomeClient';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
 
 export default function Home() {
-  const { symbols, categoryStats, loading, error } = useSymbolData({
-    apiEndpoint: '/api/symbols',
-    errorMessage: 'Failed to fetch symbols data'
+  const { symbols, categoryStats, loading, error } = useCachedSymbolData({
+    dataType: 'symbol'
   });
 
   if (loading) {

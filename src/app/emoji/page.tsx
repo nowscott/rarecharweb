@@ -1,15 +1,14 @@
 'use client';
 
 import React from 'react';
-import { useSymbolData } from '@/hooks/useSymbolData';
+import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import HomeClient from '@/components/HomeClient';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
 
 export default function EmojiPage() {
-  const { symbols, categoryStats, loading, error } = useSymbolData({
-    apiEndpoint: '/api/emoji',
-    errorMessage: 'Failed to fetch emoji data'
+  const { symbols, categoryStats, loading, error } = useCachedSymbolData({
+    dataType: 'emoji'
   });
 
   if (loading) {

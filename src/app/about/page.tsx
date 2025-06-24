@@ -1,71 +1,25 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { SymbolDataResponse, CategoryStat } from '@/lib/types';
-
-function NavigationButtons() {
-  const router = useRouter();
-
-  return (
-    <>
-      <button 
-        onClick={() => router.push('/')}
-        className="px-3 py-2 sm:px-4 sm:py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-        </svg>
-        <span className="hidden sm:inline sm:ml-2">符号</span>
-      </button>
-      <button 
-        onClick={() => router.push('/emoji')}
-        className="px-3 py-2 sm:px-4 sm:py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
-      >
-        <span className="text-lg">😀</span>
-        <span className="hidden sm:inline sm:ml-2">Emoji</span>
-      </button>
-      <button 
-        className="px-3 py-2 sm:px-4 sm:py-2 bg-purple-600 text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span className="hidden sm:inline sm:ml-2">关于</span>
-      </button>
-    </>
-  );
-}
+import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
+import NavigationButtons from '@/components/NavigationButtons';
 
 export default function About() {
-  const [stats, setStats] = useState<{ totalSymbols: number; categoryStats: CategoryStat[] }>({ totalSymbols: 0, categoryStats: [] });
-  const [version, setVersion] = useState('v1.0.0');
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/symbols');
-        const data: SymbolDataResponse = await response.json();
-        setStats(data.stats || { totalSymbols: 0, categoryStats: [] });
-        setVersion(data.version || 'v1.0.0');
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { symbols, categoryStats, loading } = useCachedSymbolData({ dataType: 'symbol' });
+  
+  const stats = {
+    totalSymbols: symbols.length,
+    categoryStats: categoryStats
+  };
+  const version = 'v1.0.0';
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">加载中...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-8 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center py-8">
+            <div className="text-lg text-gray-600 dark:text-gray-400">加载中...</div>
+          </div>
         </div>
       </div>
     );

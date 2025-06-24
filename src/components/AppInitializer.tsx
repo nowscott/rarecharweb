@@ -18,10 +18,9 @@ export default function AppInitializer({ children }: AppInitializerProps) {
         console.error('应用初始化时预加载数据失败:', error);
       });
     } else {
-      console.log('🟢 使用现有有效缓存，跳过预加载');
-      console.log(`   - 缓存年龄: ${cacheStatus.ageMinutes}分钟`);
-      console.log(`   - 符号数据: ${cacheStatus.symbolCache.hasData ? '✓' : '✗'}`);
-      console.log(`   - 表情数据: ${cacheStatus.emojiCache.hasData ? '✓' : '✗'}`);
+      console.log(`🟢 [缓存状态] 使用有效缓存 | 时间: ${cacheStatus.ageMinutes}分钟前`);
+      console.log(`📊 [符号数据] 版本: ${cacheStatus.symbolCache.version} | 数量: ${cacheStatus.symbolCache.count}`);
+      console.log(`😀 [表情数据] 版本: ${cacheStatus.emojiCache.version} | 数量: ${cacheStatus.emojiCache.count}`);
     }
   }, []);
 

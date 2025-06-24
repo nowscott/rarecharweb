@@ -124,10 +124,7 @@ async function fetchDataSource(
   // 检查缓存是否在1小时内
   if (cachedData && originalData && (now - globalCache.timestamp) < CACHE_DURATION) {
     const cacheAge = Math.floor((now - globalCache.timestamp) / 1000 / 60);
-    console.log(`🟢 [${dataType}缓存状态] 使用有效缓存数据`);
-    console.log(`   - 缓存时间: ${cacheAge}分钟前`);
-    console.log(`   - 数据版本: ${cachedData.version}`);
-    console.log(`   - 数据数量: ${cachedData.symbols.length}`);
+    console.log(`🟢 [${dataType}缓存] 使用缓存 | 时间: ${cacheAge}分钟前 | 版本: ${cachedData.version} | 数量: ${cachedData.symbols.length}`);
     
     // 后台更新：如果缓存超过30分钟且没有正在进行的后台更新，则启动后台更新
     if (cacheAge > 30 && !backgroundUpdateInProgress) {
