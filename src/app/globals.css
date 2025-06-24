@@ -36,16 +36,85 @@ body {
   font-weight: 400;
 }
 
-/* 符号专用字体设置 */
+/* 导入Google Fonts的Noto字体系列 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols:wght@400&family=Noto+Sans+Symbols+2:wght@400&family=Noto+Color+Emoji:wght@400&display=swap');
+
+/* 符号专用字体设置 - 优化的字体回退链 */
 .symbol, .symbol-card, .symbol-display, [data-symbol] {
-  font-family: 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', monospace !important;
+  font-family: 
+    'Noto Sans Symbols 2',
+    'Noto Sans Symbols', 
+    'Noto Color Emoji',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Apple Symbols',
+    'Symbola',
+    'DejaVu Sans',
+    'Liberation Sans',
+    'Arial Unicode MS',
+    'Lucida Sans Unicode',
+    sans-serif !important;
   font-weight: normal !important;
+  font-variant-numeric: normal !important;
+  font-feature-settings: normal !important;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 确保所有特殊符号都能正确显示 */
 .unicode-symbol {
-  font-family: 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', monospace !important;
+  font-family: 
+    'Noto Sans Symbols 2',
+    'Noto Sans Symbols', 
+    'Noto Color Emoji',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Apple Symbols',
+    'Symbola',
+    'DejaVu Sans',
+    'Liberation Sans',
+    'Arial Unicode MS',
+    'Lucida Sans Unicode',
+    sans-serif !important;
   font-weight: normal !important;
+  font-variant-numeric: normal !important;
+  font-feature-settings: normal !important;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* iOS Safari 特殊优化 */
+@supports (-webkit-touch-callout: none) {
+  .symbol, .symbol-card, .symbol-display, [data-symbol], .unicode-symbol {
+    font-family: 
+      'Apple Color Emoji',
+      'Noto Sans Symbols 2',
+      'Noto Sans Symbols',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      'Apple Symbols',
+      system-ui,
+      -apple-system,
+      sans-serif !important;
+  }
+}
+
+/* 强制符号使用等宽字体特性以保持对齐 */
+.symbol-monospace {
+  font-family: 
+    'Noto Sans Mono',
+    'SF Mono',
+    'Monaco',
+    'Inconsolata',
+    'Roboto Mono',
+    'Consolas',
+    'Courier New',
+    monospace !important;
+  font-variant-numeric: tabular-nums;
 }
 
 /* 允许输入框和文本区域可选中 */
@@ -54,4 +123,78 @@ input, textarea {
   -webkit-user-select: text !important;
   -moz-user-select: text !important;
   -ms-user-select: text !important;
+}
+
+/* 设备特定的符号字体优化 */
+.ios-device .symbol, 
+.ios-device .symbol-card, 
+.ios-device .symbol-display, 
+.ios-device [data-symbol], 
+.ios-device .unicode-symbol {
+  font-family: 
+    'Apple Color Emoji',
+    'Apple Symbols',
+    'Noto Sans Symbols 2',
+    'Noto Sans Symbols',
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: normal;
+}
+
+.android-device .symbol, 
+.android-device .symbol-card, 
+.android-device .symbol-display, 
+.android-device [data-symbol], 
+.android-device .unicode-symbol {
+  font-family: 
+    'Noto Color Emoji',
+    'Noto Sans Symbols 2',
+    'Noto Sans Symbols',
+    'Roboto',
+    sans-serif !important;
+}
+
+.safari-browser .symbol, 
+.safari-browser .symbol-card, 
+.safari-browser .symbol-display, 
+.safari-browser [data-symbol], 
+.safari-browser .unicode-symbol {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke: 0.01em transparent;
+}
+
+/* 符号大小和间距优化 */
+.symbol-large {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+.symbol-medium {
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+.symbol-small {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* 确保符号在所有设备上居中对齐 */
+.symbol-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 防止符号被选中时出现奇怪的高亮 */
+.symbol-no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }

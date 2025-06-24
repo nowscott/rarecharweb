@@ -7,6 +7,7 @@ import SearchBar from '@/components/SearchBar';
 import CategoryNav from '@/components/CategoryNav';
 import SymbolList from '@/components/SymbolList';
 import { pinyin } from 'pinyin';
+import { optimizeSymbolRendering, waitForFontsLoad } from '@/lib/fontUtils';
 
 interface HomeClientProps {
   symbols: SymbolData[];
@@ -21,6 +22,16 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
 
   useEffect(() => {
     setIsClient(true);
+    
+    // 初始化字体优化
+    optimizeSymbolRendering();
+    
+    // 等待字体加载完成
+    waitForFontsLoad().then(() => {
+      console.log('Symbol fonts loaded successfully');
+    }).catch((error) => {
+      console.warn('Font loading failed:', error);
+    });
   }, []);
 
   // 处理分类数据，添加"全部"分类

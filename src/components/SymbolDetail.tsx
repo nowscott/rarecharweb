@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SymbolData, CATEGORY_MAP } from '@/lib/symbolData';
+import { getSymbolClassName, applySymbolFont } from '@/lib/fontUtils';
 
 interface SymbolDetailProps {
   symbol: SymbolData | null;
@@ -8,6 +9,15 @@ interface SymbolDetailProps {
 
 const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   const [showCopySuccess, setShowCopySuccess] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const symbolRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    setIsClient(true);
+    if (symbolRef.current && symbol) {
+      applySymbolFont(symbolRef.current);
+    }
+  }, [symbol]);
   
   if (!symbol) return null;
 
@@ -42,7 +52,12 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
         <div className="p-6 pt-16">
           {/* 符号展示区域 */}
           <div className="text-center mb-6">
-            <div className="text-6xl symbol-display mb-4">{symbol.symbol}</div>
+            <div 
+              ref={symbolRef}
+              className={`text-6xl mb-4 ${isClient ? getSymbolClassName('symbol-large symbol-center symbol-no-select') : 'symbol-display symbol-large symbol-center symbol-no-select'}`}
+            >
+              {symbol.symbol}
+            </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{symbol.name}</h2>
             {symbol.pronunciation && (
               <p className="text-gray-600 dark:text-gray-400">
