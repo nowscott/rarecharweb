@@ -59,28 +59,28 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
       <div className="max-w-6xl mx-auto">
         {/* 顶部导航栏 */}
         <nav className="mb-6 sm:mb-8">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+          <div className="flex flex-row justify-between items-center">
             <div className="flex flex-col">
               <h1 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">复制符</h1>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">快速查找特殊符号，一键复制</p>
             </div>
             <div className="flex space-x-2 sm:space-x-4">
               <button 
-                className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <span className="hidden sm:inline">检索</span>
+                <span className="hidden sm:inline sm:ml-2">检索</span>
               </button>
               <button 
                 onClick={() => router.push('/about')}
-                className="px-3 py-2 sm:px-4 sm:py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="hidden sm:inline">关于</span>
+                <span className="hidden sm:inline sm:ml-2">关于</span>
               </button>
             </div>
           </div>

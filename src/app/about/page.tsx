@@ -20,12 +20,12 @@ export default async function About() {
           <div className="flex space-x-2 sm:space-x-4">
             <NavigationButton />
             <div 
-              className="px-3 sm:px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center space-x-1 sm:space-x-2 touch-manipulation active:scale-95"
+              className="px-3 sm:px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 touch-manipulation active:scale-95"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="hidden sm:inline">关于</span>
+              <span className="hidden sm:inline sm:ml-2">关于</span>
             </div>
           </div>
         </nav>
