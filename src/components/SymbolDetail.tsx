@@ -16,8 +16,14 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-md bg-black/30 dark:bg-black/50 flex items-center justify-center z-[9999] p-4">
-      <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-white/20 dark:border-gray-700/50 rounded-3xl max-w-lg w-full shadow-2xl transform transition-all duration-300 scale-100">
+    <div 
+      className="fixed inset-0 backdrop-blur-md bg-black/30 dark:bg-black/50 flex items-center justify-center z-[9999] p-4"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-white/20 dark:border-gray-700/50 rounded-3xl max-w-lg w-full shadow-2xl transform transition-all duration-300 scale-100"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* 关闭按钮 */}
         <div className="absolute top-4 right-4 z-10">
           <button 
@@ -31,12 +37,10 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
         </div>
 
         {/* 主要内容区域 */}
-        <div className="p-6 pt-10">
+        <div className="p-6 pt-16">
           {/* 符号展示区域 */}
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl mb-4">
-              <div className="text-5xl symbol-display">{symbol.symbol}</div>
-            </div>
+            <div className="text-6xl symbol-display mb-4">{symbol.symbol}</div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{symbol.name}</h2>
             {symbol.pronunciation && (
               <p className="text-gray-600 dark:text-gray-400">
