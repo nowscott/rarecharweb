@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SymbolData } from '@/lib/symbolData';
+import { SymbolData } from '@/lib/types';
 import { getSymbolClassName, applySymbolFont } from '@/lib/fontUtils';
 
 interface SymbolDetailProps {

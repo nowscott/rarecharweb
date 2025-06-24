@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/symbolData';
+import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/types';
 
 // 远程数据URL
 const betaDataUrl = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/data-beta.json';

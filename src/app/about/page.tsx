@@ -3,7 +3,7 @@
 import NavigationButton from './NavigationButton';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { SymbolDataResponse, CategoryStat } from '@/lib/symbolData';
+import { SymbolDataResponse, CategoryStat } from '@/lib/types';
 
 export default function About() {
   const [stats, setStats] = useState<{ totalSymbols: number; categoryStats: CategoryStat[] }>({ totalSymbols: 0, categoryStats: [] });

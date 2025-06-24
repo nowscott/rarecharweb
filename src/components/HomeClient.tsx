@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { SymbolData, CategoryStat } from '@/lib/symbolData';
+import { SymbolData, CategoryStat } from '@/lib/types';
 import { processSymbols } from '@/lib/symbolUtils';
 import SearchBar from '@/components/SearchBar';
 import CategoryNav from '@/components/CategoryNav';

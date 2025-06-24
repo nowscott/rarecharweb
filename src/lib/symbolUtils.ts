@@ -1,6 +1,6 @@
 // 符号搜索和排序工具函数
 import { pinyin } from 'pinyin';
-import { SymbolData } from './symbolData';
+import { SymbolData } from './types';
 import { shuffle } from 'lodash';
 
 /**

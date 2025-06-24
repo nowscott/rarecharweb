@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/symbolData';
+import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/types';
 import HomeClient from '@/components/HomeClient';
 
 export default function Home() {
