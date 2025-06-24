@@ -98,7 +98,8 @@ async function fetchDataSource(
       const data = await response.json();
       
       // 验证数据格式
-      if (!data.symbols || !Array.isArray(data.symbols)) {
+      const dataArray = dataType === 'emoji' ? data.emojis : data.symbols;
+      if (!dataArray || !Array.isArray(dataArray)) {
         throw new Error(`${dataType}数据格式无效`);
       }
       
@@ -128,13 +129,29 @@ async function fetchDataSource(
         console.log(`   - 操作: 创建新缓存`);
       }
       
-      const categoryStats = calculateCategoryStats(data.symbols);
+      // 统一数据格式
+      let symbols;
+      if (dataType === 'emoji') {
+        // 将emoji数据转换为symbols格式
+        symbols = data.emojis.map((emoji: any) => ({
+          symbol: emoji.emoji,
+          name: emoji.name,
+          pronunciation: '',
+          category: [emoji.category],
+          searchTerms: emoji.keywords || [],
+          notes: emoji.text || ''
+        }));
+      } else {
+        symbols = data.symbols;
+      }
+      
+      const categoryStats = calculateCategoryStats(symbols);
       
       const processedData = {
         ...data,
-        symbols: data.symbols,
+        symbols: symbols,
         stats: {
-          totalSymbols: data.symbols.length,
+          totalSymbols: symbols.length,
           categoryStats
         }
       };
@@ -150,7 +167,7 @@ async function fetchDataSource(
       globalCache.timestamp = now;
       saveGlobalCache(globalCache);
       
-      console.log(`${dataType}数据获取成功，共${data.symbols.length}个数据`);
+      console.log(`${dataType}数据获取成功，共${symbols.length}个数据`);
       return processedData;
       
     } catch (error) {
