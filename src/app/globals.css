@@ -36,8 +36,7 @@ body {
   font-weight: 400;
 }
 
-/* 导入Google Fonts的Noto字体系列 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols:wght@400&family=Noto+Sans+Symbols+2:wght@400&family=Noto+Color+Emoji:wght@400&display=swap');
+/* Google Fonts的Noto字体系列已在layout.tsx中加载 */
 
 /* 符号专用字体设置 - 优化的字体回退链 */
 .symbol, .symbol-card, .symbol-display, [data-symbol] {

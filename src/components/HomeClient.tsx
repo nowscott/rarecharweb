@@ -27,9 +27,7 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
     optimizeSymbolRendering();
     
     // 等待字体加载完成
-    waitForFontsLoad().then(() => {
-      console.log('Symbol fonts loaded successfully');
-    }).catch((error) => {
+    waitForFontsLoad().catch((error) => {
       console.warn('Font loading failed:', error);
     });
   }, []);
@@ -99,21 +97,11 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
       });
     }
 
-    // 排序逻辑：只有在"全部"分类下且没有搜索时才随机展示，其他情况按unicode排序
+    // 排序逻辑：全部分类下保持服务端随机化的顺序，其他分类按unicode排序
     if (!searchQuery.trim()) {
       if (activeCategory === 'all') {
-        // 全部分类下随机展示 - 只在客户端进行随机化以避免hydration错误
-        if (isClient) {
-          const shuffled = [...filtered];
-          for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-          }
-          return shuffled;
-        } else {
-          // 服务端渲染时保持原始顺序，避免hydration不匹配
-          return filtered;
-        }
+        // 全部分类下保持服务端的随机顺序
+        return filtered;
       } else {
         // 其他分类按unicode排序
         return [...filtered].sort((a, b) => a.symbol.localeCompare(b.symbol));

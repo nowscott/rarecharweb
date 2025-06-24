@@ -68,6 +68,16 @@ function calculateCategoryStats(symbols: SymbolData[]): CategoryStat[] {
   return stats;
 }
 
+// Fisher-Yates 洗牌算法
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 // 获取符号数据并缓存
 export async function getSymbolData(): Promise<SymbolDataResponse> {
   // 从远程获取数据
@@ -79,13 +89,17 @@ export async function getSymbolData(): Promise<SymbolDataResponse> {
   
   const data = await response.json();
   
+  // 对符号数据进行随机化处理
+  const shuffledSymbols = shuffleArray(data.symbols as SymbolData[]);
+  
   // 计算统计信息
-  const categoryStats = calculateCategoryStats(data.symbols);
+  const categoryStats = calculateCategoryStats(shuffledSymbols);
   
   return {
     ...data,
+    symbols: shuffledSymbols,
     stats: {
-      totalSymbols: data.symbols.length,
+      totalSymbols: shuffledSymbols.length,
       categoryStats
     }
   };
