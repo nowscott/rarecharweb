@@ -107,7 +107,11 @@ async function getSymbolData(): Promise<SymbolDataResponse> {
   // 检查是否有有效缓存
   if (cachedSymbolData && (now - cachedSymbolData.timestamp) < CACHE_DURATION) {
     // 缓存有效，检查是否需要版本对比
-    console.log('使用缓存数据');
+    const cacheAge = Math.floor((now - cachedSymbolData.timestamp) / 1000 / 60); // 分钟
+    console.log('🟢 [缓存状态] 使用有效缓存数据');
+    console.log(`   - 缓存时间: ${cacheAge}分钟前`);
+    console.log(`   - 数据版本: ${cachedSymbolData.data.version}`);
+    console.log(`   - 符号数量: ${cachedSymbolData.data.symbols.length}`);
     return cachedSymbolData.data;
   }
   
@@ -130,13 +134,25 @@ async function getSymbolData(): Promise<SymbolDataResponse> {
       
       // 如果有缓存，对比版本号
       if (cachedSymbolData && cachedSymbolData.originalData.version === data.version) {
-        console.log('版本号相同，更新缓存时间戳');
+        console.log('🟡 [缓存状态] 版本号相同，更新缓存时间戳');
+        console.log(`   - 远程版本: ${data.version}`);
+        console.log(`   - 缓存版本: ${cachedSymbolData.originalData.version}`);
+        console.log(`   - 操作: 仅更新时间戳，不重新处理数据`);
         cachedSymbolData.timestamp = now;
         return cachedSymbolData.data;
       }
       
       // 版本不同或无缓存，处理新数据
-      console.log('版本更新或首次获取，处理新数据');
+      console.log('🔴 [缓存状态] 版本更新或首次获取，处理新数据');
+      if (cachedSymbolData) {
+        console.log(`   - 旧版本: ${cachedSymbolData.originalData.version}`);
+        console.log(`   - 新版本: ${data.version}`);
+        console.log(`   - 操作: 重新处理并更新缓存`);
+      } else {
+        console.log(`   - 状态: 首次获取数据`);
+        console.log(`   - 版本: ${data.version}`);
+        console.log(`   - 操作: 创建新缓存`);
+      }
       const categoryStats = calculateCategoryStats(data.symbols);
       
       const processedData = {
