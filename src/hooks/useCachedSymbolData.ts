@@ -11,6 +11,7 @@ interface UseCachedSymbolDataOptions {
 interface UseCachedSymbolDataReturn {
   symbols: SymbolData[];
   categoryStats: CategoryStat[];
+  version: string;
   loading: boolean;
   error: string | null;
 }
@@ -20,6 +21,7 @@ export function useCachedSymbolData({
 }: UseCachedSymbolDataOptions): UseCachedSymbolDataReturn {
   const [symbols, setSymbols] = useState<SymbolData[]>([]);
   const [categoryStats, setCategoryStats] = useState<CategoryStat[]>([]);
+  const [version, setVersion] = useState<string>('v1.0.0');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,9 +48,10 @@ export function useCachedSymbolData({
             : await getEmojiData();
           
           if (data) {
-            console.log(`✅ [智能缓存] ${dataTypeName}数据加载完成 | 数量: ${data.symbols.length}`);
+            console.log(`✅ [智能缓存] 使用${dataTypeName}缓存数据 | 数量: ${data.symbols.length}`);
             setSymbols(data.symbols);
             setCategoryStats(data.stats?.categoryStats || []);
+            setVersion(data.version || 'v1.0.0');
           } else {
             throw new Error(`${dataTypeName}数据获取失败`);
           }
@@ -74,6 +77,7 @@ export function useCachedSymbolData({
                 console.log(`✅ [智能缓存] ${dataTypeName}数据预加载完成 | 数量: ${data.symbols.length}`);
                 setSymbols(data.symbols);
                 setCategoryStats(data.stats?.categoryStats || []);
+                setVersion(data.version || 'v1.0.0');
                 setLoading(false);
                 return;
               }
@@ -104,6 +108,7 @@ export function useCachedSymbolData({
   return {
     symbols,
     categoryStats,
+    version,
     loading,
     error
   };

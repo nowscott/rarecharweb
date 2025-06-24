@@ -5,13 +5,24 @@ import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import NavigationButtons from '@/components/NavigationButtons';
 
 export default function About() {
-  const { symbols, categoryStats, loading } = useCachedSymbolData({ dataType: 'symbol' });
+  const { symbols: symbolData, categoryStats: symbolCategoryStats, version: symbolVersion, loading: symbolLoading } = useCachedSymbolData({ dataType: 'symbol' });
+  const { symbols: emojiData, categoryStats: emojiCategoryStats, version: emojiVersion, loading: emojiLoading } = useCachedSymbolData({ dataType: 'emoji' });
+  
+  const loading = symbolLoading || emojiLoading;
+  
+  // 合并分类统计数据
+  const mergedCategoryStats = [...symbolCategoryStats, ...emojiCategoryStats];
   
   const stats = {
-    totalSymbols: symbols.length,
-    categoryStats: categoryStats
+    totalSymbols: symbolData.length + emojiData.length,
+    categoryStats: mergedCategoryStats
   };
-  const version = 'v1.0.0';
+  
+  // 版本信息
+  const versions = {
+    symbol: symbolVersion,
+    emoji: emojiVersion
+  };
   
   if (loading) {
     return (
@@ -125,9 +136,20 @@ export default function About() {
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 sm:p-8">
             <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">版本信息</h3>
             <div className="space-y-3 sm:space-y-4">
-              <div className="flex justify-between items-center py-2 sm:py-3 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">数据版本</span>
-                <span className="font-semibold text-sm sm:text-base text-blue-600">{version}</span>
+              <div className="py-2 sm:py-3 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">数据版本</span>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">符号数据</span>
+                    <span className="font-semibold text-xs sm:text-sm text-blue-600">{versions.symbol}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">表情数据</span>
+                    <span className="font-semibold text-xs sm:text-sm text-purple-600">{versions.emoji}</span>
+                  </div>
+                </div>
               </div>
               <div className="flex justify-between items-center py-2 sm:py-3 border-b border-gray-200 dark:border-gray-700">
                 <span className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">更新时间</span>
@@ -194,7 +216,11 @@ export default function About() {
           <div className="space-y-2">
             <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">© 2025 NowScott</p>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">辽ICP备2024046252号-2X</p>
-            <div className="pt-2">
+            <div className="pt-2 space-y-1">
+              <div className="flex justify-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                <span>符号数据版本: {versions.symbol}</span>
+                <span>表情数据版本: {versions.emoji}</span>
+              </div>
               <p className="text-xs text-yellow-600 dark:text-yellow-400">⚠️ 部分内容由AI生成，如有错误请联系我们</p>
             </div>
           </div>
