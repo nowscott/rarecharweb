@@ -12,23 +12,11 @@ export default function EmojiPage() {
   });
 
   if (loading) {
-    return (
-      <LoadingSpinner 
-        message="加载Emoji中..." 
-        className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center"
-        spinnerColor="border-indigo-600"
-      />
-    );
+    return <LoadingSpinner message="加载Emoji中..." />;
   }
 
   if (error) {
-    return (
-      <ErrorDisplay 
-        message="Emoji加载失败" 
-        error={error}
-        className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center"
-      />
-    );
+    return <ErrorDisplay message="Emoji加载失败" error={error} />;
   }
 
   return (
