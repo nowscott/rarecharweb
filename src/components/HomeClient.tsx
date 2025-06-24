@@ -12,9 +12,11 @@ import { optimizeSymbolRendering, waitForFontsLoad } from '@/lib/fontUtils';
 interface HomeClientProps {
   symbols: SymbolData[];
   categoryStats: CategoryStat[];
+  pageTitle?: string;
+  pageDescription?: string;
 }
 
-export default function HomeClient({ symbols, categoryStats }: HomeClientProps) {
+export default function HomeClient({ symbols, categoryStats, pageTitle = "复制符", pageDescription = "快速查找特殊符号，一键复制" }: HomeClientProps) {
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,17 +63,25 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
         <nav className="mb-6 sm:mb-8">
           <div className="flex flex-row justify-between items-center">
             <div className="flex flex-col">
-              <h1 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">复制符</h1>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">快速查找特殊符号，一键复制</p>
+              <h1 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">{pageTitle}</h1>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{pageDescription}</p>
             </div>
             <div className="flex space-x-2 sm:space-x-4">
               <button 
-                className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95"
+                onClick={() => router.push('/')}
+                className={`px-3 py-2 sm:px-4 sm:py-2 ${pageTitle === "复制符" ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                 </svg>
-                <span className="hidden sm:inline sm:ml-2">检索</span>
+                <span className="hidden sm:inline sm:ml-2">符号</span>
+              </button>
+              <button 
+                onClick={() => router.push('/emoji')}
+                className={`px-3 py-2 sm:px-4 sm:py-2 ${pageTitle === "Emoji 表情符号" ? 'bg-yellow-600' : 'bg-yellow-500 hover:bg-yellow-600'} text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95`}
+              >
+                <span className="text-lg">😀</span>
+                <span className="hidden sm:inline sm:ml-2">Emoji</span>
               </button>
               <button 
                 onClick={() => router.push('/about')}
