@@ -1,6 +1,5 @@
 import React from 'react';
-import { SymbolData } from '@/lib/symbolData';
-import { CATEGORY_MAP } from '@/lib/constants';
+import { SymbolData, CATEGORY_MAP } from '@/lib/symbolData';
 
 interface SymbolDetailProps {
   symbol: SymbolData | null;

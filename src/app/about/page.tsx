@@ -1,19 +1,9 @@
-'use client';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { getSymbolData } from '@/lib/symbolData';
 
-// 静态统计数据，避免每次重新加载
-const STATIC_STATS = [
-  { name: '数学符号', count: 156 },
-  { name: '箭头符号', count: 112 },
-  { name: '几何图形', count: 89 },
-  { name: '货币符号', count: 67 }
-];
-
-const TOTAL_SYMBOLS = 1200; // 静态符号总数
-
-export default function About() {
-  const router = useRouter();
+// 服务端获取统计数据
+export default async function About() {
+  const data = await getSymbolData();
+  const stats = data.stats || { totalSymbols: 0, categoryStats: [] };
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
@@ -25,23 +15,23 @@ export default function About() {
             <p className="text-gray-600 dark:text-gray-400">了解复制符应用详情</p>
           </div>
           <div className="flex space-x-4">
-            <button 
-              onClick={() => router.push('/')}
+            <a 
+              href="/"
               className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center space-x-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <span>检索</span>
-            </button>
-            <button 
+            </a>
+            <div 
               className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center space-x-2"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>关于</span>
-            </button>
+            </div>
           </div>
         </nav>
 
@@ -50,7 +40,7 @@ export default function About() {
           <h2 className="text-4xl font-bold mb-4">复制符</h2>
           <p className="text-xl mb-6 opacity-90">专为快速查找特殊符号而设计的便捷工具</p>
           <div className="flex justify-center space-x-8 text-sm">
-            {STATIC_STATS.map((stat, index) => (
+            {stats.categoryStats.slice(0, 4).map((stat, index) => (
               <div key={index}>
                 <div className="text-2xl font-bold">{stat.count}</div>
                 <div className="opacity-80">{stat.name}</div>
@@ -145,7 +135,7 @@ export default function About() {
               </div>
               <div className="flex justify-between items-center py-3">
                 <span className="text-gray-600 dark:text-gray-400">符号总数</span>
-                <span className="font-semibold">{TOTAL_SYMBOLS}+</span>
+                <span className="font-semibold">{stats.totalSymbols}+</span>
               </div>
             </div>
           </div>

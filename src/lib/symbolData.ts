@@ -9,13 +9,64 @@ export interface SymbolData {
   notes: string;
 }
 
+export interface CategoryStat {
+  id: string;
+  name: string;
+  count: number;
+}
+
 export interface SymbolDataResponse {
   version: string;
   symbols: SymbolData[];
+  stats?: {
+    totalSymbols: number;
+    categoryStats: CategoryStat[];
+  };
 }
 
 // 远程数据URL
 const betaDataUrl = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/data-beta.json';
+
+// 分类映射
+export const CATEGORY_MAP: Record<string, string> = {
+  'entertainment': '娱乐',
+  'japanese': '日语',
+  'angle': '角标',
+  'korean': '韩语',
+  'number': '数字',
+  'currency': '货币',
+  'music': '音乐',
+  'math': '数学',
+  'other': '其他',
+};
+
+// 计算分类统计信息
+function calculateCategoryStats(symbols: SymbolData[]): CategoryStat[] {
+  const categoryCounts: Record<string, number> = {};
+  
+  symbols.forEach(symbol => {
+    if (symbol.category && symbol.category.length > 0) {
+      symbol.category.forEach(cat => {
+        if (categoryCounts[cat]) {
+          categoryCounts[cat]++;
+        } else {
+          categoryCounts[cat] = 1;
+        }
+      });
+    }
+  });
+  
+  // 转换为统计数组并排序
+  const stats = Object.keys(categoryCounts)
+    .map(id => ({
+      id,
+      name: CATEGORY_MAP[id] || id,
+      count: categoryCounts[id]
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  return stats;
+}
 
 // 获取符号数据并缓存
 export async function getSymbolData(): Promise<SymbolDataResponse> {
@@ -27,7 +78,17 @@ export async function getSymbolData(): Promise<SymbolDataResponse> {
   }
   
   const data = await response.json();
-  return data;
+  
+  // 计算统计信息
+  const categoryStats = calculateCategoryStats(data.symbols);
+  
+  return {
+    ...data,
+    stats: {
+      totalSymbols: data.symbols.length,
+      categoryStats
+    }
+  };
 }
 
 // 按类别获取符号
