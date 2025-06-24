@@ -88,8 +88,6 @@ body {
   font-weight: 400;
 }
 
-/* Google Fonts的Noto字体系列已在layout.tsx中加载 */
-
 /* 符号专用字体设置 - 优化的字体回退链 */
 .symbol, .symbol-card, .symbol-display, [data-symbol] {
   font-family: 
