@@ -1,4 +1,5 @@
 // 符号数据获取和缓存工具
+import { shuffle } from 'lodash';
 
 export interface SymbolData {
   symbol: string;
@@ -68,20 +69,10 @@ function calculateCategoryStats(symbols: SymbolData[]): CategoryStat[] {
   return stats;
 }
 
-// Fisher-Yates 洗牌算法
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
-
-// 获取符号数据并缓存
+// 获取符号数据（每次请求都重新随机化）
 export async function getSymbolData(): Promise<SymbolDataResponse> {
-  // 从远程获取数据
-  const response = await fetch(betaDataUrl, { next: { revalidate: 36000 } }); // 缓存10小时
+  // 从远程获取数据，不使用缓存
+  const response = await fetch(betaDataUrl, { cache: 'no-store' });
   
   if (!response.ok) {
     throw new Error(`获取数据失败: ${response.status}`);
@@ -89,10 +80,10 @@ export async function getSymbolData(): Promise<SymbolDataResponse> {
   
   const data = await response.json();
   
-  // 对符号数据进行随机化处理
-  const shuffledSymbols = shuffleArray(data.symbols as SymbolData[]);
+  // 使用 lodash 的 shuffle 函数随机化符号数据
+  const shuffledSymbols = shuffle(data.symbols);
   
-  // 计算统计信息
+  // 计算统计信息（基于随机化后的数据）
   const categoryStats = calculateCategoryStats(shuffledSymbols);
   
   return {
