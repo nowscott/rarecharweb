@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/types';
+import { getSymbolData, getEmojiData } from '@/lib/globalCache';
 
 interface UseSymbolDataOptions {
   apiEndpoint: string;
@@ -29,16 +30,36 @@ export function useSymbolData({
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch(apiEndpoint);
-        if (!response.ok) {
-          throw new Error(`${errorMessage}: ${response.statusText}`);
+        
+        // 根据API端点选择数据源，优先使用缓存
+        let data: SymbolDataResponse | null = null;
+        
+        if (apiEndpoint.includes('/api/symbols')) {
+          console.log('🔍 [useSymbolData] 获取符号数据（优先使用缓存）');
+          data = await getSymbolData();
+        } else if (apiEndpoint.includes('/api/emoji')) {
+          console.log('🔍 [useSymbolData] 获取表情数据（优先使用缓存）');
+          data = await getEmojiData();
+        } else {
+          // 兜底：直接调用API
+          console.log('🔍 [useSymbolData] 未知端点，直接调用API:', apiEndpoint);
+          const response = await fetch(apiEndpoint);
+          if (!response.ok) {
+            throw new Error(`${errorMessage}: ${response.statusText}`);
+          }
+          data = await response.json();
         }
-        const data: SymbolDataResponse = await response.json();
-        setSymbols(data.symbols);
-        setCategoryStats(data.stats?.categoryStats || []);
+        
+        if (data) {
+          console.log(`✅ [useSymbolData] 数据获取成功，符号数量: ${data.symbols.length}`);
+          setSymbols(data.symbols);
+          setCategoryStats(data.stats?.categoryStats || []);
+        } else {
+          throw new Error('无法获取数据');
+        }
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : errorMessage;
-        console.error(errorMsg, err);
+        console.error('❌ [useSymbolData] 数据获取失败:', errorMsg, err);
         setError(errorMsg);
         // 设置空数据，让组件显示错误状态
         setSymbols([]);

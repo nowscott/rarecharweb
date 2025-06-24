@@ -13,6 +13,13 @@ interface GlobalCachedData {
 // 缓存持续时间（1小时）
 const CACHE_DURATION = 60 * 60 * 1000;
 
+// 内存缓存，避免重复读取localStorage
+let memoryCache: GlobalCachedData | null = null;
+let memoryCacheTimestamp = 0;
+
+// 后台更新状态
+let backgroundUpdateInProgress = false;
+
 // 数据源URL
 const SYMBOL_DATA_URL = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/data-beta.json';
 const EMOJI_DATA_URL = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/emoji-data.json';
@@ -20,7 +27,7 @@ const EMOJI_DATA_URL = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/emoji-da
 // 缓存键名
 const CACHE_KEY = 'rarechar_global_cache';
 
-// 获取缓存实例
+// 获取缓存实例（支持内存缓存）
 function getGlobalCache(): GlobalCachedData {
   if (typeof window === 'undefined') {
     // 服务端环境，返回空缓存
@@ -33,37 +40,76 @@ function getGlobalCache(): GlobalCachedData {
     };
   }
   
+  // 检查内存缓存（5分钟内有效）
+  const now = Date.now();
+  if (memoryCache && (now - memoryCacheTimestamp) < 5 * 60 * 1000) {
+    return memoryCache;
+  }
+  
   try {
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) {
-      return JSON.parse(cached);
+      const parsedCache = JSON.parse(cached);
+      // 更新内存缓存
+      memoryCache = parsedCache;
+      memoryCacheTimestamp = now;
+      return parsedCache;
     }
   } catch (error) {
     console.warn('读取缓存失败:', error);
   }
   
   // 返回默认缓存
-  return {
+  const defaultCache = {
     symbolData: null,
     emojiData: null,
     timestamp: 0,
     symbolOriginalData: null,
     emojiOriginalData: null
   };
+  
+  memoryCache = defaultCache;
+  memoryCacheTimestamp = now;
+  return defaultCache;
 }
 
-// 保存缓存实例
+// 保存缓存实例（同步更新内存缓存）
 function saveGlobalCache(cache: GlobalCachedData): void {
   if (typeof window === 'undefined') return;
   
   try {
     localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    // 同步更新内存缓存
+    memoryCache = cache;
+    memoryCacheTimestamp = Date.now();
   } catch (error) {
     console.warn('保存缓存失败:', error);
   }
 }
 
-
+// 获取缓存状态信息
+export function getCacheStatus() {
+  const cache = getGlobalCache();
+  const now = Date.now();
+  const ageMinutes = Math.floor((now - cache.timestamp) / 1000 / 60);
+  const isValid = cache.timestamp > 0 && (now - cache.timestamp) < CACHE_DURATION;
+  
+  return {
+    isValid,
+    ageMinutes,
+    timestamp: cache.timestamp,
+    symbolCache: {
+      hasData: !!cache.symbolData,
+      version: cache.symbolData?.version || null,
+      count: cache.symbolData?.symbols?.length || 0
+    },
+    emojiCache: {
+      hasData: !!cache.emojiData,
+      version: cache.emojiData?.version || null,
+      count: cache.emojiData?.symbols?.length || 0
+    }
+  };
+}
 
 // 获取单个数据源的函数
 async function fetchDataSource(
@@ -82,6 +128,24 @@ async function fetchDataSource(
     console.log(`   - 缓存时间: ${cacheAge}分钟前`);
     console.log(`   - 数据版本: ${cachedData.version}`);
     console.log(`   - 数据数量: ${cachedData.symbols.length}`);
+    
+    // 后台更新：如果缓存超过30分钟且没有正在进行的后台更新，则启动后台更新
+    if (cacheAge > 30 && !backgroundUpdateInProgress) {
+      console.log(`🔄 [${dataType}后台更新] 启动后台数据更新...`);
+      backgroundUpdateInProgress = true;
+      
+      // 异步后台更新，不阻塞当前请求
+      setTimeout(async () => {
+        try {
+          await updateDataInBackground(url, dataType);
+        } catch (error) {
+          console.warn(`后台更新${dataType}数据失败:`, error);
+        } finally {
+          backgroundUpdateInProgress = false;
+        }
+      }, 100); // 延迟100ms执行，确保当前请求先返回
+    }
+    
     return cachedData;
   }
   
@@ -224,21 +288,70 @@ export async function getEmojiData(): Promise<SymbolDataResponse | null> {
   return fetchDataSource(EMOJI_DATA_URL, 'emoji');
 }
 
-// 获取缓存状态（用于调试）
-export function getCacheStatus() {
-  const now = Date.now();
-  const globalCache = getGlobalCache();
-  return {
-    timestamp: globalCache.timestamp,
-    ageMinutes: globalCache.timestamp ? Math.floor((now - globalCache.timestamp) / 1000 / 60) : -1,
-    isValid: globalCache.timestamp && (now - globalCache.timestamp) < CACHE_DURATION,
-    symbolCache: {
-      hasData: !!globalCache.symbolData,
-      version: globalCache.symbolOriginalData?.version || 'unknown'
-    },
-    emojiCache: {
-      hasData: !!globalCache.emojiData,
-      version: globalCache.emojiOriginalData?.version || 'unknown'
+// 后台更新数据（不阻塞UI）
+async function updateDataInBackground(url: string, dataType: 'symbol' | 'emoji'): Promise<void> {
+  try {
+    console.log(`🔄 [${dataType}后台更新] 开始检查远程数据...`);
+    const response = await fetchWithTimeout(url, 8000);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-  };
+    
+    const data = await response.json();
+    const globalCache = getGlobalCache();
+    const originalData = dataType === 'symbol' ? globalCache.symbolOriginalData : globalCache.emojiOriginalData;
+    
+    // 检查版本号是否有更新
+    if (originalData && originalData.version === data.version) {
+      console.log(`🟡 [${dataType}后台更新] 版本号相同，仅更新时间戳`);
+      globalCache.timestamp = Date.now();
+      saveGlobalCache(globalCache);
+      return;
+    }
+    
+    // 验证数据格式
+    const dataArray = dataType === 'emoji' ? data.emojis : data.symbols;
+    if (!dataArray || !Array.isArray(dataArray)) {
+      throw new Error(`${dataType}数据格式无效`);
+    }
+    
+    console.log(`🟢 [${dataType}后台更新] 发现新版本，开始处理数据...`);
+    console.log(`   - 旧版本: ${originalData?.version || '无'}`);
+    console.log(`   - 新版本: ${data.version}`);
+    
+    // 统一数据格式
+    const symbols = dataType === 'emoji' ? data.emojis : data.symbols;
+    const categoryStats = calculateCategoryStats(symbols);
+    
+    const processedData: SymbolDataResponse = {
+      version: data.version,
+      symbols: symbols,
+      stats: {
+        totalSymbols: symbols.length,
+        categoryStats: categoryStats
+      }
+    };
+    
+    // 更新缓存
+    const now = Date.now();
+    if (dataType === 'symbol') {
+      globalCache.symbolData = processedData;
+      globalCache.symbolOriginalData = data;
+    } else {
+      globalCache.emojiData = processedData;
+      globalCache.emojiOriginalData = data;
+    }
+    globalCache.timestamp = now;
+    
+    saveGlobalCache(globalCache);
+    
+    console.log(`✅ [${dataType}后台更新] 数据更新完成`);
+    console.log(`   - 数据数量: ${symbols.length}`);
+    console.log(`   - 缓存时间: ${new Date(now).toLocaleTimeString()}`);
+    
+  } catch (error) {
+    console.warn(`❌ [${dataType}后台更新] 更新失败:`, error);
+    throw error;
+  }
 }
