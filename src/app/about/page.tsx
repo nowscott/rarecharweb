@@ -1,16 +1,43 @@
+'use client';
+
 import NavigationButton from './NavigationButton';
 import Image from 'next/image';
-import { getSymbolData } from '@/lib/symbolData';
+import { useState, useEffect } from 'react';
+import { SymbolDataResponse, CategoryStat } from '@/lib/symbolData';
 
-// 启用 ISR，每10小时重新验证一次
-export const revalidate = 36000
+export default function About() {
+  const [stats, setStats] = useState<{ totalSymbols: number; categoryStats: CategoryStat[] }>({ totalSymbols: 0, categoryStats: [] });
+  const [version, setVersion] = useState('v1.0.0');
+  const [loading, setLoading] = useState(true);
 
-// 服务端获取统计数据
-export default async function About() {
-  const data = await getSymbolData();
-  const stats = data.stats || { totalSymbols: 0, categoryStats: [] };
-  const version = data.version || 'v1.0.0';
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/symbols');
+        const data: SymbolDataResponse = await response.json();
+        setStats(data.stats || { totalSymbols: 0, categoryStats: [] });
+        setVersion(data.version || 'v1.0.0');
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
   
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">加载中...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-8 px-4">
       <div className="max-w-6xl mx-auto">
