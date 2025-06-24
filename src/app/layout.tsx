@@ -12,11 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Load symbol fonts using Next.js font optimization
-const notoSansSymbols = {
-  variable: "--font-noto-symbols",
-  className: "noto-symbols",
-};
+
 
 export const metadata: Metadata = {
   title: "复制符 - 特殊符号查询工具",
@@ -40,7 +36,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${notoSansSymbols.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
