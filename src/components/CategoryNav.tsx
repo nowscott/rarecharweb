@@ -17,7 +17,7 @@ const CategoryNav: React.FC<CategoryNavProps> = ({ activeCategory, onSelectCateg
   // 如果categories为空，显示加载中
   if (!categories || categories.length === 0) {
     return (
-      <div className="w-full overflow-x-auto pb-2">
+      <div className="w-full overflow-x-auto pb-2 scrollbar-thin">
         <div className="flex space-x-2 min-w-max">
           <div className="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-700">
             加载分类中...
@@ -28,7 +28,7 @@ const CategoryNav: React.FC<CategoryNavProps> = ({ activeCategory, onSelectCateg
   }
   
   return (
-    <div className="w-full overflow-x-auto pb-2 scrollbar-hide">
+    <div className="w-full overflow-x-auto pb-2 scrollbar-thin">
       <div className="flex space-x-2 sm:space-x-3 min-w-max px-1">
         {categories.map((category) => (
           <button
