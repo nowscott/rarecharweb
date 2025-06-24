@@ -40,7 +40,7 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
     >
       <button
         onClick={handleCopy}
-        className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 p-1.5 sm:p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-colors opacity-0 group-hover:opacity-100 sm:opacity-0 opacity-100 touch-manipulation"
+        className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 p-1.5 sm:p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-colors opacity-0 group-hover:opacity-100 sm:opacity-0 touch-manipulation"
         title="复制符号"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
