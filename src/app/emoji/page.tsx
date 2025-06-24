@@ -1,46 +1,33 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/types';
+import { useSymbolData } from '@/hooks/useSymbolData';
 import HomeClient from '@/components/HomeClient';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import ErrorDisplay from '@/components/ErrorDisplay';
 
 export default function EmojiPage() {
-  const [symbols, setSymbols] = useState<SymbolData[]>([]);
-  const [categoryStats, setCategoryStats] = useState<CategoryStat[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/emoji');
-        if (!response.ok) {
-          throw new Error('Failed to fetch emoji data');
-        }
-        const data: SymbolDataResponse = await response.json();
-        setSymbols(data.symbols);
-        setCategoryStats(data.stats?.categoryStats || []);
-      } catch (error) {
-        console.error('Error fetching emoji data:', error);
-        // 设置空数据，让组件显示错误状态
-        setSymbols([]);
-        setCategoryStats([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
+  const { symbols, categoryStats, loading, error } = useSymbolData({
+    apiEndpoint: '/api/emoji',
+    errorMessage: 'Failed to fetch emoji data'
+  });
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">加载Emoji中...</p>
-        </div>
-      </div>
+      <LoadingSpinner 
+        message="加载Emoji中..." 
+        className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center"
+        spinnerColor="border-indigo-600"
+      />
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorDisplay 
+        message="Emoji加载失败" 
+        error={error}
+        className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center"
+      />
     );
   }
 

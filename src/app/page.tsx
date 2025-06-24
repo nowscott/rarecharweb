@@ -1,40 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/types';
+import { useSymbolData } from '@/hooks/useSymbolData';
 import HomeClient from '@/components/HomeClient';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import ErrorDisplay from '@/components/ErrorDisplay';
 
 export default function Home() {
-  const [symbols, setSymbols] = useState<SymbolData[]>([]);
-  const [categoryStats, setCategoryStats] = useState<CategoryStat[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/symbols');
-        const data: SymbolDataResponse = await response.json();
-        setSymbols(data.symbols);
-        setCategoryStats(data.stats?.categoryStats || []);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { symbols, categoryStats, loading, error } = useSymbolData({
+    apiEndpoint: '/api/symbols',
+    errorMessage: 'Failed to fetch symbols data'
+  });
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">加载中...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner message="加载符号中..." />;
+  }
+
+  if (error) {
+    return <ErrorDisplay message="符号加载失败" error={error} />;
   }
 
   return (
