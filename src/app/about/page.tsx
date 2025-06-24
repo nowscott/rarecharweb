@@ -1,11 +1,19 @@
 'use client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import useSymbolData from '@/hooks/useSymbolData';
+
+// 静态统计数据，避免每次重新加载
+const STATIC_STATS = [
+  { name: '数学符号', count: 156 },
+  { name: '箭头符号', count: 112 },
+  { name: '几何图形', count: 89 },
+  { name: '货币符号', count: 67 }
+];
+
+const TOTAL_SYMBOLS = 1200; // 静态符号总数
 
 export default function About() {
   const router = useRouter();
-  const { symbols, dynamicCategories, loading } = useSymbolData();
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
@@ -42,16 +50,12 @@ export default function About() {
           <h2 className="text-4xl font-bold mb-4">复制符</h2>
           <p className="text-xl mb-6 opacity-90">专为快速查找特殊符号而设计的便捷工具</p>
           <div className="flex justify-center space-x-8 text-sm">
-            {loading ? (
-              <div className="text-lg opacity-80">加载中...</div>
-            ) : (
-              dynamicCategories.slice(0, 4).map((category) => (
-                <div key={category.id}>
-                  <div className="text-2xl font-bold">{category.count}</div>
-                  <div className="opacity-80">{category.name}</div>
-                </div>
-              ))
-            )}
+            {STATIC_STATS.map((stat, index) => (
+              <div key={index}>
+                <div className="text-2xl font-bold">{stat.count}</div>
+                <div className="opacity-80">{stat.name}</div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -141,7 +145,7 @@ export default function About() {
               </div>
               <div className="flex justify-between items-center py-3">
                 <span className="text-gray-600 dark:text-gray-400">符号总数</span>
-                <span className="font-semibold">{loading ? '加载中...' : `${symbols.length}+`}</span>
+                <span className="font-semibold">{TOTAL_SYMBOLS}+</span>
               </div>
             </div>
           </div>
@@ -151,14 +155,10 @@ export default function About() {
             <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">联系我们</h3>
             <div className="grid grid-cols-1 gap-4">
               <a href="https://www.xiaohongshu.com/user/profile/5d40f52f000000001101ba6c?xsec_token=YBExHFaolW_sm5IScluGnf76LQ9Y4yHv13pn_qnh3e0y0=&xsec_source=app_share&xhsshare=CopyLink&appuid=5d40f52f000000001101ba6c&apptime=1750673095&share_id=9e7f80f1b072439b9e9d2a2dc46ef1cc" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white">
-                  <Image
-                    src="/xiaohongshu.jpg"
-                    alt="小红书"
-                    width={48}
-                    height={48}
-                    className="rounded-full object-cover"
-                  />
+                <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-red-500">
+                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.125 4.5h2.25c.621 0 1.125.504 1.125 1.125v.75c0 .621-.504 1.125-1.125 1.125h-2.25c-.621 0-1.125-.504-1.125-1.125v-.75c0-.621.504-1.125 1.125-1.125zm0 4.5h2.25c.621 0 1.125.504 1.125 1.125v.75c0 .621-.504 1.125-1.125 1.125h-2.25c-.621 0-1.125-.504-1.125-1.125v-.75c0-.621.504-1.125 1.125-1.125z"/>
+                  </svg>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">小红书</h4>
@@ -166,13 +166,11 @@ export default function About() {
                 </div>
               </a>
               <a href="https://github.com/nowscott/rarecharweb" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white">
-                  <Image
-                    src="/github.jpg"
-                    alt="GitHub"
-                    width={48}
-                    height={48}
-                    className="rounded-full object-cover"
+                <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-gray-900 dark:bg-white">
+                  <img 
+                    src="https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/github.svg" 
+                    alt="GitHub" 
+                    className="w-8 h-8 filter invert dark:invert-0"
                   />
                 </div>
                 <div>
