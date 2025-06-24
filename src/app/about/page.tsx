@@ -1,6 +1,6 @@
-import { getSymbolData } from '@/lib/symbolData';
 import NavigationButton from './NavigationButton';
 import Image from 'next/image';
+import { getSymbolData } from '@/lib/symbolData';
 
 // 服务端获取统计数据
 export default async function About() {

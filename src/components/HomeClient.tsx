@@ -3,10 +3,10 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { SymbolData, CategoryStat } from '@/lib/symbolData';
+import { processSymbols } from '@/lib/symbolUtils';
 import SearchBar from '@/components/SearchBar';
 import CategoryNav from '@/components/CategoryNav';
 import SymbolList from '@/components/SymbolList';
-import { pinyin } from 'pinyin';
 import { optimizeSymbolRendering, waitForFontsLoad } from '@/lib/fontUtils';
 
 interface HomeClientProps {
@@ -18,12 +18,8 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [isClient, setIsClient] = useState(false);
-
 
   useEffect(() => {
-    setIsClient(true);
-    
     // 初始化字体优化
     optimizeSymbolRendering();
     
@@ -40,84 +36,15 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
     return [allCategory, ...categoryStats];
   }, [symbols.length, categoryStats]);
 
-  // 根据当前分类和搜索查询过滤符号
+  // 根据当前分类和搜索查询处理符号数据
   const displayedSymbols = useMemo(() => {
-    let filtered = symbols;
-
-    // 按分类过滤
-    if (activeCategory !== 'all') {
-      filtered = filtered.filter(symbol => symbol.category.includes(activeCategory));
-    }
-
-    // 按搜索查询过滤
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter(symbol => {
-        // 原有的搜索逻辑
-        const basicMatch = 
-          symbol.symbol.toLowerCase().includes(query) ||
-          symbol.name.toLowerCase().includes(query) ||
-          symbol.pronunciation.toLowerCase().includes(query) ||
-          symbol.notes.toLowerCase().includes(query) ||
-          symbol.searchTerms.some((term: string) => term.toLowerCase().includes(query));
-        
-        // 拼音搜索逻辑
-        const pinyinMatch = (() => {
-          try {
-            // 将符号名称转换为拼音进行匹配
-            const namePinyin = pinyin(symbol.name, {
-              style: 'normal', // 不带声调
-              heteronym: false // 不返回多音字的所有读音
-            }).join('').toLowerCase();
-            
-            // 将符号备注转换为拼音进行匹配
-            const notesPinyin = pinyin(symbol.notes, {
-              style: 'normal',
-              heteronym: false
-            }).join('').toLowerCase();
-            
-            // 将搜索词转换为拼音进行匹配
-            const searchTermsPinyin = symbol.searchTerms.map(term => 
-              pinyin(term, {
-                style: 'normal',
-                heteronym: false
-              }).join('').toLowerCase()
-            );
-            
-            return namePinyin.includes(query) ||
-                   notesPinyin.includes(query) ||
-                   searchTermsPinyin.some(termPinyin => termPinyin.includes(query));
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          } catch (error) {
-            // 如果拼音转换出错，返回false
-            return false;
-          }
-        })();
-        
-        return basicMatch || pinyinMatch;
-      });
-    }
-
-    // 排序逻辑：全部分类下保持原始顺序，其他分类按unicode排序
-    if (!searchQuery.trim()) {
-      if (activeCategory === 'all') {
-        // 全部分类下保持原始顺序
-        return filtered;
-      } else {
-        // 其他分类按unicode排序
-        return [...filtered].sort((a, b) => a.symbol.localeCompare(b.symbol));
-      }
-    }
-
-    return filtered;
-  }, [symbols, activeCategory, searchQuery, isClient]);
+    return processSymbols(symbols, activeCategory, searchQuery);
+  }, [symbols, activeCategory, searchQuery]);
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     setSearchQuery(''); // 切换分类时清空搜索
   };
-
-
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);

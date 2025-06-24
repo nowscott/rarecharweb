@@ -62,7 +62,7 @@ function calculateCategoryStats(symbols: SymbolData[]): CategoryStat[] {
 interface CachedData {
   data: SymbolDataResponse;
   timestamp: number;
-  originalData: any; // 用于对比的原始数据
+  originalData: SymbolDataResponse; // 用于对比的原始数据
 }
 
 let cachedSymbolData: CachedData | null = null;
