@@ -6,6 +6,7 @@ import Image from 'next/image';
 export default async function About() {
   const data = await getSymbolData();
   const stats = data.stats || { totalSymbols: 0, categoryStats: [] };
+  const version = data.version || 'v1.0.0';
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
@@ -116,8 +117,8 @@ export default async function About() {
             <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">版本信息</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-gray-600 dark:text-gray-400">当前版本</span>
-                <span className="font-semibold text-blue-600">v1.5.8-beta</span>
+                <span className="text-gray-600 dark:text-gray-400">数据版本</span>
+                <span className="font-semibold text-blue-600">{version}</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700">
                 <span className="text-gray-600 dark:text-gray-400">更新时间</span>
