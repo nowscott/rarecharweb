@@ -140,6 +140,7 @@ input, textarea {
     sans-serif !important;
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: normal;
+  font-feature-settings: normal;
 }
 
 .android-device .symbol, 
