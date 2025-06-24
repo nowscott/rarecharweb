@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SymbolData, CATEGORY_MAP } from '@/lib/symbolData';
 
 interface SymbolDetailProps {
@@ -7,11 +7,14 @@ interface SymbolDetailProps {
 }
 
 const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
+  const [showCopySuccess, setShowCopySuccess] = useState(false);
+  
   if (!symbol) return null;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(symbol.symbol);
-    alert('符号已复制到剪贴板');
+    setShowCopySuccess(true);
+    setTimeout(() => setShowCopySuccess(false), 2000);
   };
 
   return (
@@ -83,19 +86,32 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
             {symbol.notes && (
               <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
                 <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">说明:</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{symbol.notes}</p>
+                <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                  {symbol.notes.split('\n').map((line, index) => (
+                    <p key={index} className={index > 0 ? 'mt-2' : ''}>
+                      {line}
+                    </p>
+                  ))}
+                </div>
               </div>
             )}
           </div>
 
           {/* 操作按钮 */}
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex justify-center relative">
             <button
               onClick={handleCopy}
               className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               复制符号
             </button>
+            
+            {/* 复制成功提示 */}
+            {showCopySuccess && (
+              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg animate-pulse">
+                复制成功！
+              </div>
+            )}
           </div>
         </div>
       </div>
