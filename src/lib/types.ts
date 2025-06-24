@@ -15,6 +15,14 @@ export interface CategoryStat {
   count: number;
 }
 
+export interface EmojiData {
+  emoji: string;
+  name: string;
+  category: string;
+  keywords?: string[];
+  text?: string;
+}
+
 export interface SymbolDataResponse {
   version: string;
   symbols: SymbolData[];
@@ -22,4 +30,9 @@ export interface SymbolDataResponse {
     totalSymbols: number;
     categoryStats: CategoryStat[];
   };
+}
+
+export interface EmojiDataResponse {
+  version: string;
+  emojis: EmojiData[];
 }

@@ -1,4 +1,4 @@
-import { SymbolDataResponse } from './types';
+import { SymbolDataResponse, EmojiData, EmojiDataResponse } from './types';
 import { fetchWithTimeout, calculateCategoryStats } from './apiUtils';
 
 // 缓存接口
@@ -7,7 +7,7 @@ interface GlobalCachedData {
   emojiData: SymbolDataResponse | null;
   timestamp: number;
   symbolOriginalData: SymbolDataResponse | null;
-  emojiOriginalData: SymbolDataResponse | null;
+  emojiOriginalData: EmojiDataResponse | null;
 }
 
 // 缓存持续时间（1小时）
@@ -197,7 +197,7 @@ async function fetchDataSource(
       let symbols;
       if (dataType === 'emoji') {
         // 将emoji数据转换为symbols格式
-        symbols = data.emojis.map((emoji: any) => ({
+        symbols = data.emojis.map((emoji: EmojiData) => ({
           symbol: emoji.emoji,
           name: emoji.name,
           pronunciation: '',
