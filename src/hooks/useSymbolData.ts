@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/types';
 

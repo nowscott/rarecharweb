@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useSymbolData } from '@/hooks/useSymbolData';
 import HomeClient from '@/components/HomeClient';
 import LoadingSpinner from '@/components/LoadingSpinner';

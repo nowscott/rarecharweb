@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
-
+import AppInitializer from '@/components/AppInitializer';
 
 export const metadata: Metadata = {
   title: "复制符 - 特殊符号查询工具",
@@ -25,7 +24,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className="antialiased">
-        {children}
+        <AppInitializer>
+          {children}
+        </AppInitializer>
       </body>
     </html>
   );
