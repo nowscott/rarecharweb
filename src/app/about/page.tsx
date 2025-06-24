@@ -1,5 +1,6 @@
 import { getSymbolData } from '@/lib/symbolData';
 import NavigationButton from './NavigationButton';
+import Image from 'next/image';
 
 // 服务端获取统计数据
 export default async function About() {
@@ -150,10 +151,12 @@ export default async function About() {
               </a>
               <a href="https://github.com/nowscott/rarecharweb" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                 <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-gray-900 dark:bg-white">
-                  <img 
+                  <Image 
                     src="https://cdn.jsdelivr.net/npm/simple-icons@v15/icons/github.svg" 
                     alt="GitHub" 
-                    className="w-8 h-8 filter invert dark:invert-0"
+                    width={32}
+                    height={32}
+                    className="filter invert dark:invert-0"
                   />
                 </div>
                 <div>

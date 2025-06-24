@@ -105,7 +105,10 @@ export const applySymbolFont = (element: HTMLElement): void => {
   element.style.textRendering = 'optimizeLegibility';
   
   // 使用类型断言来处理webkit属性
-  const style = element.style as any;
+  const style = element.style as CSSStyleDeclaration & {
+    webkitFontSmoothing?: string;
+    webkitTextSizeAdjust?: string;
+  };
   style.webkitFontSmoothing = 'antialiased';
   
   // iOS 特殊处理
