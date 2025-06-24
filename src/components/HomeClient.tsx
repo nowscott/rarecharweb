@@ -77,6 +77,7 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
             return namePinyin.includes(query) ||
                    notesPinyin.includes(query) ||
                    searchTermsPinyin.some(termPinyin => termPinyin.includes(query));
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (error) {
             // 如果拼音转换出错，返回false
             return false;
@@ -170,7 +171,6 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
         <SymbolList 
           displayedSymbols={displayedSymbols}
           searchQuery={searchQuery}
-          activeCategory={activeCategory}
         />
       </div>
     </div>

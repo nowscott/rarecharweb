@@ -8,13 +8,11 @@ import SymbolDetail from '@/components/SymbolDetail';
 interface SymbolListProps {
   displayedSymbols: SymbolData[];
   searchQuery: string;
-  activeCategory: string;
 }
 
 const SymbolList: React.FC<SymbolListProps> = ({
   displayedSymbols,
-  searchQuery,
-  activeCategory
+  searchQuery
 }) => {
   const [selectedSymbol, setSelectedSymbol] = useState<SymbolData | null>(null);
 
