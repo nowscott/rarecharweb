@@ -1,21 +1,10 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { getSymbolData } from '@/lib/symbolData';
-import { useEffect, useState } from 'react';
-import { SymbolData, CategoryStat } from '@/lib/symbolData';
+import NavigationButton from './NavigationButton';
 
-export default function About() {
-  const router = useRouter();
-  const [stats, setStats] = useState<{ totalSymbols: number; categoryStats: CategoryStat[] }>({ totalSymbols: 0, categoryStats: [] });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getSymbolData();
-      setStats(data.stats || { totalSymbols: 0, categoryStats: [] });
-    };
-    fetchData();
-  }, []);
+// 服务端获取统计数据
+export default async function About() {
+  const data = await getSymbolData();
+  const stats = data.stats || { totalSymbols: 0, categoryStats: [] };
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
@@ -27,15 +16,7 @@ export default function About() {
             <p className="text-gray-600 dark:text-gray-400">了解复制符应用详情</p>
           </div>
           <div className="flex space-x-4">
-            <button 
-              onClick={() => router.push('/')}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center space-x-2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <span>检索</span>
-            </button>
+            <NavigationButton />
             <div 
               className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center space-x-2"
             >
