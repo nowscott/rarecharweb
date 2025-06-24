@@ -28,7 +28,37 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  /* 移动端优化 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100%;
   -ms-user-select: none;
+}
+
+/* 隐藏滚动条样式 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* 移动端触摸优化 */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* 移动端按钮点击效果 */
+@media (hover: none) and (pointer: coarse) {
+  button:hover {
+    transform: none;
+  }
+  
+  button:active {
+    transform: scale(0.98);
+  }
 }
 
 * {
