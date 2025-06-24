@@ -81,15 +81,15 @@ export function filterSymbolsByCategory(symbols: SymbolData[], category: string)
  * @param hasSearchQuery 是否有搜索查询
  * @returns 排序后的符号数组
  */
-export function sortSymbols(symbols: SymbolData[], category: string, hasSearchQuery: boolean): SymbolData[] {
+export function sortSymbols(symbols: SymbolData[], category: string, hasSearchQuery: boolean, isClient: boolean = false): SymbolData[] {
   // 如果有搜索查询，保持搜索结果的原始顺序
   if (hasSearchQuery) {
     return symbols;
   }
   
-  // 全部分类下随机排序，其他分类按unicode排序
+  // 全部分类下：客户端随机排序，服务端保持原始顺序（避免hydration mismatch）
   if (category === 'all') {
-    return shuffle([...symbols]);
+    return isClient ? shuffle([...symbols]) : symbols;
   } else {
     return [...symbols].sort((a, b) => a.symbol.localeCompare(b.symbol));
   }
@@ -100,12 +100,14 @@ export function sortSymbols(symbols: SymbolData[], category: string, hasSearchQu
  * @param symbols 原始符号数组
  * @param category 当前分类
  * @param searchQuery 搜索查询
+ * @param isClient 是否在客户端运行
  * @returns 处理后的符号数组
  */
 export function processSymbols(
   symbols: SymbolData[], 
   category: string, 
-  searchQuery: string
+  searchQuery: string,
+  isClient: boolean = false
 ): SymbolData[] {
   // 1. 按分类过滤
   let filtered = filterSymbolsByCategory(symbols, category);
@@ -117,7 +119,7 @@ export function processSymbols(
   
   // 3. 排序
   const hasSearchQuery = searchQuery.trim().length > 0;
-  filtered = sortSymbols(filtered, category, hasSearchQuery);
+  filtered = sortSymbols(filtered, category, hasSearchQuery, isClient);
   
   return filtered;
 }
