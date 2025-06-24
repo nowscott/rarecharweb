@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { shuffle } from 'lodash';
 import { SymbolData, CategoryStat } from '@/lib/symbolData';
 import SearchBar from '@/components/SearchBar';
 import CategoryNav from '@/components/CategoryNav';
@@ -19,9 +20,13 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [isClient, setIsClient] = useState(false);
+  const [shuffledSymbols, setShuffledSymbols] = useState<SymbolData[]>([]);
 
   useEffect(() => {
     setIsClient(true);
+    
+    // 在客户端进行随机化
+    setShuffledSymbols(shuffle([...symbols]));
     
     // 初始化字体优化
     optimizeSymbolRendering();
@@ -30,7 +35,7 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
     waitForFontsLoad().catch((error) => {
       console.warn('Font loading failed:', error);
     });
-  }, []);
+  }, [symbols]);
 
   // 处理分类数据，添加"全部"分类
   const categories = useMemo(() => {
@@ -41,7 +46,7 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
 
   // 根据当前分类和搜索查询过滤符号
   const displayedSymbols = useMemo(() => {
-    let filtered = symbols;
+    let filtered = shuffledSymbols;
 
     // 按分类过滤
     if (activeCategory !== 'all') {
@@ -109,10 +114,16 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
     }
 
     return filtered;
-  }, [symbols, activeCategory, searchQuery, isClient]);
+  }, [shuffledSymbols, activeCategory, searchQuery, isClient]);
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
+    setSearchQuery(''); // 切换分类时清空搜索
+  };
+
+  // 重新随机化符号顺序
+  const handleReshuffle = () => {
+    setShuffledSymbols(shuffle([...symbols]));
   };
 
   const handleSearch = (query: string) => {
@@ -150,7 +161,21 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
         </nav>
 
         <div className="mb-6">
-          <SearchBar onSearch={handleSearch} />
+          <div className="flex gap-4 items-center">
+            <SearchBar onSearch={handleSearch} />
+            {activeCategory === 'all' && !searchQuery && (
+              <button
+                onClick={handleReshuffle}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center space-x-2 whitespace-nowrap"
+                title="重新随机排序"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>随机</span>
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="mb-6">
