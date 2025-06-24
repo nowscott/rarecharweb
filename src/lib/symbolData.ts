@@ -66,54 +66,7 @@ interface CachedData {
 let cachedSymbolData: CachedData | null = null;
 const CACHE_DURATION = 60 * 60 * 1000; // 1小时
 
-// 后台更新缓存
-async function updateCacheInBackground() {
-  try {
-    console.log('开始后台更新缓存...');
-    const response = await fetchWithTimeout(betaDataUrl, 8000);
-    
-    if (!response.ok) {
-      console.error(`后台更新失败: HTTP ${response.status}`);
-      return;
-    }
-    
-    const newData = await response.json();
-    
-    // 验证数据格式
-    if (!newData.symbols || !Array.isArray(newData.symbols)) {
-      console.error('后台更新失败: 数据格式无效');
-      return;
-    }
-    
-    // 对比数据是否有变化（简单对比符号数量和版本）
-    const hasChanged = !cachedSymbolData || 
-      cachedSymbolData.originalData.symbols.length !== newData.symbols.length ||
-      cachedSymbolData.originalData.version !== newData.version;
-    
-    if (hasChanged) {
-       // 数据有变化，更新缓存
-       const categoryStats = calculateCategoryStats(newData.symbols);
-       
-       cachedSymbolData = {
-         data: {
-           ...newData,
-           symbols: newData.symbols,
-           stats: {
-             totalSymbols: newData.symbols.length,
-             categoryStats
-           }
-         },
-         timestamp: Date.now(),
-         originalData: newData
-       };
-       console.log(`后台缓存更新成功，共${newData.symbols.length}个符号`);
-    } else {
-      console.log('后台检查完成，数据无变化');
-    }
-  } catch (error) {
-    console.error('后台更新缓存失败:', error);
-  }
-}
+
 
 // 本地备用数据
 const fallbackData: SymbolDataResponse = {
@@ -184,7 +137,6 @@ export async function getSymbolData(): Promise<SymbolDataResponse> {
   }
   
   // 尝试获取新数据，最多重试2次
-  let lastError: Error | null = null;
   
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
@@ -225,7 +177,6 @@ export async function getSymbolData(): Promise<SymbolDataResponse> {
       return processedData;
       
     } catch (error) {
-      lastError = error as Error;
       console.error(`第${attempt}次尝试失败:`, error);
       
       // 如果不是最后一次尝试，等待1秒后重试
