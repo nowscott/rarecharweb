@@ -18,8 +18,12 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // 标记客户端已挂载，避免hydration mismatch
+    setIsClient(true);
+    
     // 初始化字体优化
     optimizeSymbolRendering();
     
@@ -38,8 +42,8 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
 
   // 根据当前分类和搜索查询处理符号数据
   const displayedSymbols = useMemo(() => {
-    return processSymbols(symbols, activeCategory, searchQuery);
-  }, [symbols, activeCategory, searchQuery]);
+    return processSymbols(symbols, activeCategory, searchQuery, isClient);
+  }, [symbols, activeCategory, searchQuery, isClient]);
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
@@ -98,10 +102,19 @@ export default function HomeClient({ symbols, categoryStats }: HomeClientProps) 
           </div>
         ) : null}
 
-        <SymbolList 
-          displayedSymbols={displayedSymbols}
-          searchQuery={searchQuery}
-        />
+        {!isClient ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+              <p className="text-gray-600 dark:text-gray-400">正在加载符号...</p>
+            </div>
+          </div>
+        ) : (
+          <SymbolList 
+            displayedSymbols={displayedSymbols}
+            searchQuery={searchQuery}
+          />
+        )}
       </div>
     </div>
   );
