@@ -28,8 +28,6 @@ export interface SymbolDataResponse {
 // 远程数据URL
 const betaDataUrl = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/data-beta.json';
 
-// 分类映射已移除，因为数据中的分类字段已经是中文
-
 // 计算分类统计信息
 function calculateCategoryStats(symbols: SymbolData[]): CategoryStat[] {
   const categoryCounts: Record<string, number> = {};
@@ -150,7 +148,6 @@ export async function getSymbolData(): Promise<SymbolDataResponse> {
     // 不等待后台更新完成
     updateCacheInBackground();
   }
-  
   return processedData;
 }
 
@@ -162,9 +159,7 @@ export function getSymbolsByCategory(symbols: SymbolData[], category: string): S
 // 搜索符号
 export function searchSymbols(symbols: SymbolData[], query: string): SymbolData[] {
   if (!query) return [];
-  
   const lowerQuery = query.toLowerCase();
-  
   return symbols.filter(symbol => 
     symbol.symbol.includes(query) || 
     symbol.name.toLowerCase().includes(lowerQuery) ||

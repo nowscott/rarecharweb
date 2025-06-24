@@ -2,6 +2,9 @@ import NavigationButton from './NavigationButton';
 import Image from 'next/image';
 import { getSymbolData } from '@/lib/symbolData';
 
+// 启用 ISR，每10小时重新验证一次
+export const revalidate = 36000
+
 // 服务端获取统计数据
 export default async function About() {
   const data = await getSymbolData();
