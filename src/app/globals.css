@@ -1,5 +1,6 @@
 @import url('https://f.0211120.xyz/font/得意黑/result.css');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols:wght@400&family=Noto+Sans+Symbols+2:wght@400&family=Noto+Color+Emoji:wght@400&display=swap');
+/* 移除Google Fonts CDN依赖，避免Chrome浏览器兼容性问题 */
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols:wght@400&family=Noto+Sans+Symbols+2:wght@400&family=Noto+Color+Emoji:wght@400&display=swap'); */
 @import "tailwindcss";
 
 :root {
@@ -88,17 +89,16 @@ body {
   font-weight: 400;
 }
 
-/* 符号专用字体设置 - 优化的字体回退链 */
+/* 符号专用字体设置 - 优化的字体回退链，优先使用系统字体 */
 .symbol, .symbol-card, .symbol-display, [data-symbol] {
   font-family: 
-    'Noto Sans Symbols 2',
-    'Noto Sans Symbols', 
-    'Noto Color Emoji',
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'Apple Symbols',
-    'Symbola',
+    'Apple Color Emoji',        /* macOS系统字体，优先级最高 */
+    'Segoe UI Emoji',          /* Windows系统字体 */
+    'Noto Color Emoji',        /* Android/Linux系统字体 */
+    'Twemoji Mozilla',         /* Firefox备用字体 */
+    'Apple Symbols',           /* macOS符号字体 */
+    'Segoe UI Symbol',         /* Windows符号字体 */
+    'Symbola',                 /* 通用符号字体 */
     'DejaVu Sans',
     'Liberation Sans',
     'Arial Unicode MS',
@@ -115,14 +115,13 @@ body {
 /* 确保所有特殊符号都能正确显示 */
 .unicode-symbol {
   font-family: 
-    'Noto Sans Symbols 2',
-    'Noto Sans Symbols', 
-    'Noto Color Emoji',
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'Apple Symbols',
-    'Symbola',
+    'Apple Color Emoji',        /* macOS系统字体，优先级最高 */
+    'Segoe UI Emoji',          /* Windows系统字体 */
+    'Noto Color Emoji',        /* Android/Linux系统字体 */
+    'Twemoji Mozilla',         /* Firefox备用字体 */
+    'Apple Symbols',           /* macOS符号字体 */
+    'Segoe UI Symbol',         /* Windows符号字体 */
+    'Symbola',                 /* 通用符号字体 */
     'DejaVu Sans',
     'Liberation Sans',
     'Arial Unicode MS',
