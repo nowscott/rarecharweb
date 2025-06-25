@@ -26,18 +26,18 @@ export enum DeviceType {
 const FONT_STACKS: Record<DeviceType, FontStack> = {
   [DeviceType.IOS]: {
     primary: ['Apple Color Emoji', 'Apple Symbols', 'Noto Sans Symbols 2'],
-    fallback: ['Noto Color Emoji', 'Segoe UI Emoji', 'Symbola', 'system-ui', '-apple-system', 'sans-serif']
+    fallback: ['Noto Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Symbola', 'system-ui', '-apple-system', 'sans-serif']
   },
   [DeviceType.ANDROID]: {
     primary: ['Noto Color Emoji', 'Noto Sans Symbols 2', 'Roboto'],
-    fallback: ['Apple Color Emoji', 'Segoe UI Emoji', 'Symbola', 'DejaVu Sans', 'sans-serif']
+    fallback: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'sans-serif']
   },
   [DeviceType.DESKTOP]: {
-    primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Noto Sans Symbols 2'],
-    fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'sans-serif']
+    primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Symbols 2'],
+    fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'sans-serif']
   },
   [DeviceType.UNKNOWN]: {
-    primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Noto Sans Symbols 2'],
+    primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Symbols 2'],
     fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Symbola', 'system-ui', 'sans-serif']
   }
 };

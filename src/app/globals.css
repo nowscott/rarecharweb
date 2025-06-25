@@ -92,11 +92,11 @@ body {
   font-family: 
     'Apple Color Emoji',        /* macOS系统字体，优先级最高 */
     'Segoe UI Emoji',          /* Windows系统字体 */
+    'Segoe UI Symbol',         /* Windows符号字体 */
     'Noto Sans Symbols 2',     /* 新增符号字体 */
     'Noto Color Emoji',        /* Android/Linux系统字体 */
     'Twemoji Mozilla',         /* Firefox备用字体 */
     'Apple Symbols',           /* macOS符号字体 */
-    'Segoe UI Symbol',         /* Windows符号字体 */
     'Symbola',                 /* 通用符号字体 */
     'DejaVu Sans',
     'Liberation Sans',
@@ -249,14 +249,14 @@ input, textarea {
 
 /* 符号字体配置 - 优先使用系统字体 */
 .symbol-font {
-  font-family: 'Noto Sans Symbols 2', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'Lucida Grande', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Symbols 2', 'Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'Lucida Grande', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
   font-feature-settings: "liga" on, "clig" on;
   text-rendering: optimizeLegibility;
 }
 
 /* 专门为象棋符号优化的字体配置 */
 .chess-symbol {
-  font-family: 'Noto Sans Symbols 2', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'Lucida Grande', monospace;
+  font-family: 'Apple Symbols', 'Segoe UI Symbol', 'Noto Sans Symbols 2', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'Lucida Grande', monospace;
   font-size: inherit;
   line-height: 1;
   font-variant-numeric: normal;
