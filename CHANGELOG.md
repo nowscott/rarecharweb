@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nowscott/rarecharweb/compare/v1.0.0...v1.0.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* **about:** 使用package.json中的版本号替换硬编码版本 ([ebd649a](https://github.com/nowscott/rarecharweb/commit/ebd649ad76a3223dc6d88834426c21eeea9e2b05))
+
 # 1.0.0 (2025-06-25)
 
 
