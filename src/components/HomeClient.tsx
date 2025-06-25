@@ -78,7 +78,7 @@ export default function HomeClient({ symbols, categoryStats, pageTitle = "复制
               </button>
               <button 
                 onClick={() => router.push('/emoji')}
-                className={`px-3 py-2 sm:px-4 sm:py-2 ${pageTitle === "Emoji 表情符号" ? 'bg-orange-600' : 'bg-gray-400 hover:bg-gray-500'} text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95`}
+                className={`px-3 py-2 sm:px-4 sm:py-2 ${pageTitle === "Emoji" ? 'bg-orange-600' : 'bg-gray-400 hover:bg-gray-500'} text-white rounded-lg transition-colors flex items-center justify-center sm:justify-start sm:space-x-2 text-sm sm:text-base touch-manipulation active:scale-95`}
               >
                 <span className="text-lg">😀</span>
                 <span className="hidden sm:inline sm:ml-2">Emoji</span>
