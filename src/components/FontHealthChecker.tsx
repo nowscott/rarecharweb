@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getFontDebugInfo, checkFontHealth } from '@/lib/fontUtils';
+import { getFontDebugInfo } from '@/lib/fontUtils';
 
 interface FontHealthData {
   available: string[];
