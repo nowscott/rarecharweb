@@ -23,8 +23,8 @@ export default function EmojiPage() {
     <HomeClient 
       symbols={symbols} 
       categoryStats={categoryStats}
-      pageTitle="Emoji 表情符号"
-      pageDescription="探索丰富的Emoji表情符号世界，找到完美的表达方式"
+      pageTitle="Emoji"
+      pageDescription="探索丰富的Emoji世界，找到完美的表达方式"
     />
   );
 }
