@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/nowscott/rarecharweb/compare/v1.0.1...v1.1.0) (2025-06-25)
+
+
+### Bug Fixes
+
+* **SymbolDetail:** 修复多字符符号的Unicode显示问题 ([d69dc31](https://github.com/nowscott/rarecharweb/commit/d69dc3183869463cf9d24cb876acf0af624f4b0e))
+* **HomeClient:** 修正Emoji按钮激活状态判断条件 ([b887eb0](https://github.com/nowscott/rarecharweb/commit/b887eb04fac14ec85b630b036882d9fa7b6cdeb0))
+
+
+### Features
+
+* **字体:** 添加Noto Sans Symbols 2字体支持象棋符号显示 ([ddc2b4e](https://github.com/nowscott/rarecharweb/commit/ddc2b4e7f4a527e6ef8402e9f82f1f16c2e55237))
+
 ## [1.0.1](https://github.com/nowscott/rarecharweb/compare/v1.0.0...v1.0.1) (2025-06-25)
 
 
