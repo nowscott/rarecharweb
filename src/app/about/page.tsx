@@ -214,13 +214,9 @@ export default function About() {
         {/* 底部版权信息 */}
         <footer className="text-center py-6 sm:py-8 mt-8 sm:mt-12 border-t border-gray-200 dark:border-gray-700">
           <div className="space-y-2">
-            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">© 2025 NowScott</p>
-            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">辽ICP备2024046252号-2X</p>
-            <div className="pt-2 space-y-1">
-              <div className="flex justify-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
-                <span>符号数据版本: {versions.symbol}</span>
-                <span>表情数据版本: {versions.emoji}</span>
-              </div>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">复制符 v0.1.0</p>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">© 2025 NowScott</p>
+            <div className="pt-2">
               <p className="text-xs text-yellow-600 dark:text-yellow-400">⚠️ 部分内容由AI生成，如有错误请联系我们</p>
             </div>
           </div>
