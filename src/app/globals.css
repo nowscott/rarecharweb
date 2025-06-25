@@ -1,16 +1,5 @@
 @import url('https://f.0211120.xyz/font/得意黑/result.css');
-/* 移除Google Fonts CDN依赖，避免Chrome浏览器兼容性问题 */
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols:wght@400&family=Noto+Sans+Symbols+2:wght@400&family=Noto+Color+Emoji:wght@400&display=swap'); */
 @import "tailwindcss";
-
-/* 导入 Noto Sans Symbols 2 字体以支持象棋符号 (U+1FA60-U+1FA6D) */
-/* 使用本地字体文件 */
-@font-face {
-  font-family: 'Noto Sans Symbols 2';
-  src: url('/font/NotoSansSymbols2-Regular.ttf') format('truetype');
-  font-display: swap;
-  unicode-range: U+1FA60-U+1FA6D;
-}
 
 :root {
   --background: #ffffff;

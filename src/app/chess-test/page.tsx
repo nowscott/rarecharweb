@@ -83,7 +83,7 @@ const ChessTestPage = () => {
           <li>• 如果看到正确的象棋符号，说明字体配置成功</li>
           <li>• 如果看到方框或问号，说明字体不支持这些字符</li>
           <li>• Unicode 范围: U+1FA60 到 U+1FA6D (Symbols and Pictographs Extended-A)</li>
-          <li>• 支持字体: Noto Sans Symbols 2 (本地字体文件 + 外部CDN)</li>
+          <li>• 支持字体: Noto Sans Symbols 2 (外部CDN)</li>
           <li>• 备用字体: Apple Symbols, Segoe UI Symbol, Symbola</li>
         </ul>
       </div>
