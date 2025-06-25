@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/nowscott/rarecharweb/compare/v1.1.1...v1.1.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* 更新符号数据URL从beta版本到正式版本 ([8f3f012](https://github.com/nowscott/rarecharweb/commit/8f3f012e15ff6f5733d4e5203a4b51a28f1c4765))
+
 ## [1.1.1](https://github.com/nowscott/rarecharweb/compare/v1.1.0...v1.1.1) (2025-06-25)
 
 
