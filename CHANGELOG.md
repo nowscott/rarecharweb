@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nowscott/rarecharweb/compare/v1.1.0...v1.1.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* 移除本地Noto Sans Symbols 2字体依赖，仅使用CDN ([df95bd6](https://github.com/nowscott/rarecharweb/commit/df95bd6ef36d9e605affb93c942b80c7352c55a6))
+
 # [1.1.0](https://github.com/nowscott/rarecharweb/compare/v1.0.1...v1.1.0) (2025-06-25)
 
 
