@@ -21,7 +21,7 @@ let memoryCacheTimestamp = 0;
 let backgroundUpdateInProgress = false;
 
 // 数据源URL
-const SYMBOL_DATA_URL = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/data-beta.json';
+const SYMBOL_DATA_URL = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/data.json';
 const EMOJI_DATA_URL = 'https://symboldata.oss-cn-shanghai.aliyuncs.com/emoji-data.json';
 
 // 缓存键名
