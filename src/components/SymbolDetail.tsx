@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SymbolData } from '@/lib/types';
 import { getSymbolClassName, applySymbolFont } from '@/lib/fontUtils';
 
@@ -86,12 +86,15 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
             </div>
 
             {/* Unicode 信息 */}
-            {symbol.symbol.codePointAt(0) && (
+            {symbol.symbol && (
               <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Unicode:</span>
                   <span className="text-gray-600 dark:text-gray-400 font-mono text-sm">
-                    U+{symbol.symbol.codePointAt(0)?.toString(16).toUpperCase().padStart(4, '0')}
+                    {Array.from(symbol.symbol).map((char, index) => {
+                      const codePoint = char.codePointAt(0);
+                      return codePoint ? `U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}` : '';
+                    }).filter(Boolean).join(' ')}
                   </span>
                 </div>
               </div>
