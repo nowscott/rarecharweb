@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import NavigationButtons from '@/components/NavigationButtons';
+import packageJson from '../../../package.json';
 
 export default function About() {
   const { symbols: symbolData, categoryStats: symbolCategoryStats, version: symbolVersion, loading: symbolLoading } = useCachedSymbolData({ dataType: 'symbol' });
@@ -214,7 +215,7 @@ export default function About() {
         {/* 底部版权信息 */}
         <footer className="text-center py-6 sm:py-8 mt-8 sm:mt-12 border-t border-gray-200 dark:border-gray-700">
           <div className="space-y-2">
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">复制符 v0.1.0</p>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">复制符 v{packageJson.version}</p>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">© 2025 NowScott</p>
             <div className="pt-2">
               <p className="text-xs text-yellow-600 dark:text-yellow-400">⚠️ 部分内容由AI生成，如有错误请联系我们</p>
