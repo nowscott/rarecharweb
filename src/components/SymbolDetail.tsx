@@ -91,7 +91,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Unicode:</span>
                   <span className="text-gray-600 dark:text-gray-400 font-mono text-sm">
-                    {Array.from(symbol.symbol).map((char, index) => {
+                    {Array.from(symbol.symbol).map((char) => {
                       const codePoint = char.codePointAt(0);
                       return codePoint ? `U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}` : '';
                     }).filter(Boolean).join(' ')}

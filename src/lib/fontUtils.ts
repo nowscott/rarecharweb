@@ -181,13 +181,7 @@ export const waitForFontsLoad = async (): Promise<void> => {
   }
 };
 
-// 关键字体预加载列表
-const CRITICAL_FONTS = [
-  'Apple Color Emoji',
-  'Segoe UI Emoji',
-  'Noto Color Emoji',
-  'Noto Sans Symbols 2'
-];
+
 
 // 预加载关键字体 - 优化的预加载策略
 export const preloadCriticalFonts = (): void => {
