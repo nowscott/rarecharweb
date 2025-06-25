@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/nowscott/rarecharweb/compare/v1.1.2...v1.1.3) (2025-06-25)
+
+
+### Bug Fixes
+
+* **fonts:** 调整字体栈顺序并添加Segoe UI Symbol字体 ([95f0d6f](https://github.com/nowscott/rarecharweb/commit/95f0d6f46464bffbf788b50b36a1569ebd3399f1))
+
 ## [1.1.2](https://github.com/nowscott/rarecharweb/compare/v1.1.1...v1.1.2) (2025-06-25)
 
 
