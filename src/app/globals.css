@@ -3,6 +3,15 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols:wght@400&family=Noto+Sans+Symbols+2:wght@400&family=Noto+Color+Emoji:wght@400&display=swap'); */
 @import "tailwindcss";
 
+/* 导入 Noto Sans Symbols 2 字体以支持象棋符号 (U+1FA60-U+1FA6D) */
+/* 使用本地字体文件 */
+@font-face {
+  font-family: 'Noto Sans Symbols 2';
+  src: url('/font/NotoSansSymbols2-Regular.ttf') format('truetype');
+  font-display: swap;
+  unicode-range: U+1FA60-U+1FA6D;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -94,6 +103,7 @@ body {
   font-family: 
     'Apple Color Emoji',        /* macOS系统字体，优先级最高 */
     'Segoe UI Emoji',          /* Windows系统字体 */
+    'Noto Sans Symbols 2',     /* 新增符号字体 */
     'Noto Color Emoji',        /* Android/Linux系统字体 */
     'Twemoji Mozilla',         /* Firefox备用字体 */
     'Apple Symbols',           /* macOS符号字体 */
@@ -246,4 +256,20 @@ input, textarea {
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* 符号字体配置 - 优先使用系统字体 */
+.symbol-font {
+  font-family: 'Noto Sans Symbols 2', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'Lucida Grande', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+  font-feature-settings: "liga" on, "clig" on;
+  text-rendering: optimizeLegibility;
+}
+
+/* 专门为象棋符号优化的字体配置 */
+.chess-symbol {
+  font-family: 'Noto Sans Symbols 2', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'Lucida Grande', monospace;
+  font-size: inherit;
+  line-height: 1;
+  font-variant-numeric: normal;
+  font-feature-settings: "liga" off;
 }

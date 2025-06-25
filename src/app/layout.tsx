@@ -19,6 +19,8 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <head>
+        {/* 外部字体CDN */}
+        <link rel="stylesheet" href="https://f.0211120.xyz/font/Noto%20Sans%20Symbols%202/result.css" crossOrigin="anonymous" />
         {/* 移动端优化 */}
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />

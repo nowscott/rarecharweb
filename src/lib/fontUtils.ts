@@ -25,19 +25,19 @@ export enum DeviceType {
 // 字体配置常量 - 优化后的系统字体优先策略
 const FONT_STACKS: Record<DeviceType, FontStack> = {
   [DeviceType.IOS]: {
-    primary: ['Apple Color Emoji', 'Apple Symbols'],
+    primary: ['Apple Color Emoji', 'Apple Symbols', 'Noto Sans Symbols 2'],
     fallback: ['Noto Color Emoji', 'Segoe UI Emoji', 'Symbola', 'system-ui', '-apple-system', 'sans-serif']
   },
   [DeviceType.ANDROID]: {
-    primary: ['Noto Color Emoji', 'Roboto'],
+    primary: ['Noto Color Emoji', 'Noto Sans Symbols 2', 'Roboto'],
     fallback: ['Apple Color Emoji', 'Segoe UI Emoji', 'Symbola', 'DejaVu Sans', 'sans-serif']
   },
   [DeviceType.DESKTOP]: {
-    primary: ['Apple Color Emoji', 'Segoe UI Emoji'],
+    primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Noto Sans Symbols 2'],
     fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'sans-serif']
   },
   [DeviceType.UNKNOWN]: {
-    primary: ['Apple Color Emoji', 'Segoe UI Emoji'],
+    primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Noto Sans Symbols 2'],
     fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Symbola', 'system-ui', 'sans-serif']
   }
 };
@@ -180,6 +180,14 @@ export const waitForFontsLoad = async (): Promise<void> => {
     return Promise.resolve();
   }
 };
+
+// 关键字体预加载列表
+const CRITICAL_FONTS = [
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Noto Color Emoji',
+  'Noto Sans Symbols 2'
+];
 
 // 预加载关键字体 - 优化的预加载策略
 export const preloadCriticalFonts = (): void => {
