@@ -26,19 +26,19 @@ export enum DeviceType {
 const FONT_STACKS: Record<DeviceType, FontStack> = {
   [DeviceType.IOS]: {
     primary: ['Apple Color Emoji', 'Apple Symbols', 'Noto Sans Symbols 2'],
-    fallback: ['Noto Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Symbola', 'system-ui', '-apple-system', 'sans-serif']
+    fallback: ['Noto Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'sans-serif', 'Symbola', 'system-ui', '-apple-system','Smiley Sans Oblique']
   },
   [DeviceType.ANDROID]: {
     primary: ['Noto Color Emoji', 'Noto Sans Symbols 2', 'Roboto'],
-    fallback: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Symbola', 'DejaVu Sans', 'sans-serif']
+    fallback: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'sans-serif', 'Symbola', 'DejaVu Sans','Smiley Sans Oblique']
   },
   [DeviceType.DESKTOP]: {
     primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Symbols 2'],
-    fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS', 'sans-serif']
+    fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Apple Symbols', 'sans-serif', 'Symbola', 'DejaVu Sans', 'Arial Unicode MS','Smiley Sans Oblique']
   },
   [DeviceType.UNKNOWN]: {
     primary: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Symbols 2'],
-    fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'Symbola', 'system-ui', 'sans-serif']
+    fallback: ['Noto Color Emoji', 'Twemoji Mozilla', 'sans-serif', 'Symbola', 'system-ui','Smiley Sans Oblique']
   }
 };
 
@@ -135,7 +135,7 @@ export const applySymbolFont = (element: HTMLElement): void => {
   
   const fontStack = getSymbolFontStack();
   element.style.fontFamily = fontStack;
-  element.style.fontWeight = 'normal';
+  element.style.fontWeight = '500';
   element.style.fontVariantNumeric = 'normal';
   element.style.textRendering = 'optimizeLegibility';
   
@@ -336,8 +336,5 @@ export const getFontDebugInfo = async () => {
     timestamp: new Date().toISOString()
   };
 };
-
-// checkFontHealth函数已在上面直接导出，无需重复导出
-
 // 导出类型定义
 export type { FontStack };
