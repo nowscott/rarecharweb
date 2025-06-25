@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 import "./globals.css";
 import AppInitializer from '@/components/AppInitializer';
+import FontHealthChecker from '@/components/FontHealthChecker';
 
 export const metadata: Metadata = {
   title: "复制符 - 特殊符号查询工具",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <AppInitializer>
           {children}
         </AppInitializer>
+        <FontHealthChecker />
       </body>
     </html>
   );
