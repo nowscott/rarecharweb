@@ -31,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           placeholder="输入检索词，实时显示结果..." 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          autoComplete="search"
+          autoComplete="off"
         />
       </div>
     </div>
