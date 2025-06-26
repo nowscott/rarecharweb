@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/nowscott/rarecharweb/compare/v1.1.4...v1.1.5) (2025-06-26)
+
+
+### Bug Fixes
+
+* **SearchBar:** 禁用输入框自动完成功能以避免干扰搜索 ([afca43b](https://github.com/nowscott/rarecharweb/commit/afca43bdc7ffbc73cca76d7cfb20260500ca0f21))
+
 ## [1.1.4](https://github.com/nowscott/rarecharweb/compare/v1.1.3...v1.1.4) (2025-06-25)
 
 ## [1.1.3](https://github.com/nowscott/rarecharweb/compare/v1.1.2...v1.1.3) (2025-06-25)
