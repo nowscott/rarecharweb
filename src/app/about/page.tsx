@@ -65,8 +65,23 @@ export default function About() {
     };
   }, []);
   
-  // 合并分类统计数据
-  const mergedCategoryStats = [...symbolCategoryStats, ...emojiCategoryStats];
+  // 合并分类统计数据，将相同名称的分类进行合并统计
+  const categoryMap = new Map<string, number>();
+  
+  // 合并符号分类统计
+  symbolCategoryStats.forEach(stat => {
+    categoryMap.set(stat.name, (categoryMap.get(stat.name) || 0) + stat.count);
+  });
+  
+  // 合并emoji分类统计
+  emojiCategoryStats.forEach(stat => {
+    categoryMap.set(stat.name, (categoryMap.get(stat.name) || 0) + stat.count);
+  });
+  
+  // 转换为数组并按数量排序
+  const mergedCategoryStats = Array.from(categoryMap.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
   
   const stats = {
     totalSymbols: symbolData.length + emojiData.length,
@@ -107,13 +122,18 @@ export default function About() {
 
         {/* Hero 区域 */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl sm:rounded-2xl p-6 sm:p-8 lg:p-12 mb-8 sm:mb-12 text-white text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">复制符</h2>
-          <p className="text-lg sm:text-xl mb-4 sm:mb-6 opacity-90">专为快速查找特殊符号而设计的便捷工具</p>
-          <div className="grid grid-cols-2 sm:flex sm:justify-center gap-4 sm:gap-8 text-sm">
+          {/* 主要标题 */}
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">热门分类统计</h2>
+            <p className="text-base sm:text-lg opacity-90">符号和表情符号中数量最多的分类</p>
+          </div>
+          
+          {/* 统计数据 */}
+          <div className="grid grid-cols-2 sm:flex sm:justify-center gap-6 sm:gap-8">
             {stats.categoryStats.slice(0, 4).map((stat, index) => (
-              <div key={index}>
-                <div className="text-xl sm:text-2xl font-bold">{stat.count}</div>
-                <div className="opacity-80 text-xs sm:text-sm">{stat.name}</div>
+              <div key={index} className="flex flex-col items-center">
+                <div className="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2">{stat.count}</div>
+                <div className="text-sm sm:text-base opacity-90 font-medium">{stat.name}</div>
               </div>
             ))}
           </div>
