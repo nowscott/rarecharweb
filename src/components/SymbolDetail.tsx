@@ -18,6 +18,21 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
       applySymbolFont(symbolRef.current);
     }
   }, [symbol]);
+
+  // 禁用页面滚动
+  useEffect(() => {
+    if (symbol) {
+      // 保存当前的overflow样式
+      const originalOverflow = document.body.style.overflow;
+      // 禁用滚动
+      document.body.style.overflow = 'hidden';
+      
+      // 清理函数：恢复滚动
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [symbol]);
   
   if (!symbol) return null;
 
@@ -104,7 +119,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
             {symbol.notes && (
               <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
                 <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">说明:</h3>
-                <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto">
                   {symbol.notes.split('\n').map((line, index) => (
                     <p key={index} className={index > 0 ? 'mt-2' : ''}>
                       {line}
