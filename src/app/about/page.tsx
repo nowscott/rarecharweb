@@ -4,12 +4,63 @@ import Image from 'next/image';
 import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import NavigationButtons from '@/components/NavigationButtons';
 import packageJson from '../../../package.json';
+import { useState, useRef, useEffect } from 'react';
 
 export default function About() {
   const { symbols: symbolData, categoryStats: symbolCategoryStats, version: symbolVersion, loading: symbolLoading } = useCachedSymbolData({ dataType: 'symbol' });
   const { symbols: emojiData, categoryStats: emojiCategoryStats, version: emojiVersion, loading: emojiLoading } = useCachedSymbolData({ dataType: 'emoji' });
   
   const loading = symbolLoading || emojiLoading;
+  
+  // 点击计数状态
+  const [clickCount, setClickCount] = useState(0);
+  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // 清除缓存并重新加载
+  const clearCacheAndReload = () => {
+    // 清除localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.clear();
+      // 清除sessionStorage
+      sessionStorage.clear();
+      // 重新加载页面
+      window.location.reload();
+    }
+  };
+  
+  // 处理点击事件
+  const handleVersionClick = () => {
+    setClickCount(prev => {
+      const newCount = prev + 1;
+      
+      // 如果达到5次点击，清除缓存并重新加载
+      if (newCount >= 5) {
+        clearCacheAndReload();
+        return 0;
+      }
+      
+      return newCount;
+    });
+    
+    // 清除之前的计时器
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current);
+    }
+    
+    // 设置新的计时器，3秒后重置计数
+    clickTimerRef.current = setTimeout(() => {
+      setClickCount(0);
+    }, 3000);
+  };
+
+  // 清理计时器
+  useEffect(() => {
+    return () => {
+      if (clickTimerRef.current) {
+        clearTimeout(clickTimerRef.current);
+      }
+    };
+  }, []);
   
   // 合并分类统计数据
   const mergedCategoryStats = [...symbolCategoryStats, ...emojiCategoryStats];
@@ -215,7 +266,12 @@ export default function About() {
         {/* 底部版权信息 */}
         <footer className="text-center py-6 sm:py-8 mt-8 sm:mt-12 border-t border-gray-200 dark:border-gray-700">
           <div className="space-y-2">
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">复制符 v{packageJson.version}</p>
+            <div 
+              className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium cursor-pointer select-none transition-colors duration-200 hover:text-gray-800 dark:hover:text-gray-200"
+              onClick={handleVersionClick}
+            >
+              复制符 v{packageJson.version}
+            </div>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500">© 2025 NowScott</p>
             <div className="pt-2">
               <p className="text-xs text-yellow-600 dark:text-yellow-400">⚠️ 部分内容由AI生成，如有错误请联系我们</p>
