@@ -84,7 +84,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
           {/* 信息卡片区域 */}
           <div className="space-y-2">
             {/* 分类信息 */}
-            <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
+            <div className="bg-gray-100/90 dark:bg-gray-700/50 rounded-xl p-3 border border-gray-200/50 dark:border-gray-600/30">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">分类:</span>
                 <div className="flex flex-wrap gap-2">
@@ -102,7 +102,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
 
             {/* Unicode 信息 */}
             {symbol.symbol && (
-              <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
+              <div className="bg-gray-100/90 dark:bg-gray-700/50 rounded-xl p-3 border border-gray-200/50 dark:border-gray-600/30">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Unicode:</span>
                   <span className="text-gray-600 dark:text-gray-400 font-mono text-sm">
@@ -117,7 +117,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
 
             {/* 说明信息 */}
             {symbol.notes && (
-              <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
+              <div className="bg-gray-100/90 dark:bg-gray-700/50 rounded-xl p-3 border border-gray-200/50 dark:border-gray-600/30">
                 <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">说明:</h3>
                 <div className="relative">
                   <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto scrollbar-thin pr-2">
@@ -128,7 +128,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
                     ))}
                   </div>
                   {/* 滚动提示渐变 */}
-                  <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-50/80 to-transparent dark:from-gray-700/50 pointer-events-none rounded-b-xl" />
+                  <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-100/90 to-transparent dark:from-gray-700/50 pointer-events-none rounded-b-xl" />
                   {/* 滚动指示器 */}
                   <div className="absolute top-1 right-1 text-gray-400 dark:text-gray-500 text-xs opacity-60">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
