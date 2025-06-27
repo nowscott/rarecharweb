@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/nowscott/rarecharweb/compare/v1.1.5...v1.1.6) (2025-06-27)
+
+
+### Bug Fixes
+
+* **SymbolDetail:** 修复符号详情弹出时页面滚动问题 ([50f15cc](https://github.com/nowscott/rarecharweb/commit/50f15cc5a8bddc8dd2d213b4a0e39d871d0d5290))
+
 ## [1.1.5](https://github.com/nowscott/rarecharweb/compare/v1.1.4...v1.1.5) (2025-06-26)
 
 
