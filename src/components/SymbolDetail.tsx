@@ -119,12 +119,22 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
             {symbol.notes && (
               <div className="bg-gray-50/80 dark:bg-gray-700/50 rounded-xl p-3">
                 <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">说明:</h3>
-                <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto">
-                  {symbol.notes.split('\n').map((line, index) => (
-                    <p key={index} className={index > 0 ? 'mt-2' : ''}>
-                      {line}
-                    </p>
-                  ))}
+                <div className="relative">
+                  <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto scrollbar-thin pr-2">
+                    {symbol.notes.split('\n').map((line, index) => (
+                      <p key={index} className={index > 0 ? 'mt-2' : ''}>
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                  {/* 滚动提示渐变 */}
+                  <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-50/80 to-transparent dark:from-gray-700/50 pointer-events-none rounded-b-xl" />
+                  {/* 滚动指示器 */}
+                  <div className="absolute top-1 right-1 text-gray-400 dark:text-gray-500 text-xs opacity-60">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             )}
