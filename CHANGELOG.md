@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/nowscott/rarecharweb/compare/v1.3.0...v1.4.0) (2025-06-27)
+
+
+### Features
+
+* **组件:** 改进复制按钮的视觉反馈效果 ([c34596d](https://github.com/nowscott/rarecharweb/commit/c34596def2f1aa7f1bbb9a189163a96bed9f977d))
+
 # [1.3.0](https://github.com/nowscott/rarecharweb/compare/v1.2.0...v1.3.0) (2025-06-27)
 
 
