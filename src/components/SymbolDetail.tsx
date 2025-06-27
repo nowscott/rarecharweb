@@ -154,7 +154,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
                 <div className="relative">
                   <div 
                     ref={notesContentRef}
-                    className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto scrollbar-thin pr-2"
+                    className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto scrollbar-thin pl-2 pr-1"
                   >
                     {symbol.notes.split('\n').map((line, index) => (
                       <p key={index} className={index > 0 ? 'mt-2' : ''}>
@@ -164,7 +164,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
                   </div>
                   {/* 滚动提示渐变 - 仅在内容溢出时显示 */}
                   {showScrollGradient && (
-                    <div className="absolute bottom-0 left-0 right-2 h-6 bg-gradient-to-t from-gray-100 via-gray-100/80 to-transparent dark:from-gray-700/50 dark:via-gray-700/70 dark:to-transparent pointer-events-none" />
+                    <div className="absolute bottom-0 left-2 right-1 h-6 bg-gradient-to-t from-gray-100 via-gray-100/80 to-transparent dark:from-gray-700/50 dark:via-gray-700/70 dark:to-transparent pointer-events-none" />
                   )}
 
                 </div>
