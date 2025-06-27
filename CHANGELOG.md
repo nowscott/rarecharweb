@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/nowscott/rarecharweb/compare/v1.1.6...v1.2.0) (2025-06-27)
+
+
+### Features
+
+* **SymbolDetail:** 为说明文本添加滚动提示和指示器 ([8f3ea64](https://github.com/nowscott/rarecharweb/commit/8f3ea64d7ef4f57d2c8ae38e61b57fbefaf8ff7c))
+* **SymbolDetail:** 添加说明内容滚动检测和渐变提示 ([1354e11](https://github.com/nowscott/rarecharweb/commit/1354e1146ad4844cec9fe1aefd6ceda266e7c6e3))
+
 ## [1.1.6](https://github.com/nowscott/rarecharweb/compare/v1.1.5...v1.1.6) (2025-06-27)
 
 
