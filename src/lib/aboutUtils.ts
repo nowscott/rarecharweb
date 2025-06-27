@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { aboutConfig } from './aboutConfig';
+import { SymbolData } from './types';
 
 // 类型定义
 export interface CategoryStat {
@@ -108,8 +109,8 @@ export function useBackdoorClick(onTrigger: () => void) {
 
 // 生成统计数据的工具函数
 export function generateStats(
-  symbolData: any[],
-  emojiData: any[],
+  symbolData: SymbolData[],
+  emojiData: SymbolData[],
   symbolCategoryStats: CategoryStat[],
   emojiCategoryStats: CategoryStat[]
 ): AboutStats {
