@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/nowscott/rarecharweb/compare/v1.2.0...v1.3.0) (2025-06-27)
+
+
+### Bug Fixes
+
+* **about:** 添加clickCount的void语句避免ESLint警告 ([40b3432](https://github.com/nowscott/rarecharweb/commit/40b3432a858d15fc99ffece39a1fb1e6be531567))
+
+
+### Features
+
+* **about:** 优化分类统计合并逻辑并更新UI样式 ([5563da8](https://github.com/nowscott/rarecharweb/commit/5563da817f1dac2d504d1512efc43a70652d056a))
+* **about:** 实现关于页面功能模块化重构 ([bf257f7](https://github.com/nowscott/rarecharweb/commit/bf257f7f83bd4552979c2b923bae72b16e94b065))
+* 添加快捷清理缓存功能 ([5cb7cd6](https://github.com/nowscott/rarecharweb/commit/5cb7cd6657a61286bec7acf5a8bd1a734fa4f353))
+
 # [1.2.0](https://github.com/nowscott/rarecharweb/compare/v1.1.6...v1.2.0) (2025-06-27)
 
 
