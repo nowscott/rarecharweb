@@ -16,6 +16,9 @@ export default function About() {
   const [clickCount, setClickCount] = useState(0);
   const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
   
+  // 避免ESLint警告，实际在handleVersionClick中使用
+  void clickCount;
+  
   // 清除缓存并重新加载
   const clearCacheAndReload = () => {
     // 清除localStorage
