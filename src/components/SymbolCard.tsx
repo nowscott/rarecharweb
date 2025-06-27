@@ -21,15 +21,15 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
     }
   }, [symbol.symbol]);
   
+  const [copySuccess, setCopySuccess] = useState(false);
+
   const handleCopy = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigator.clipboard.writeText(symbol.symbol);
-    // 简单的视觉反馈
-    const target = e.currentTarget as HTMLElement;
-    const originalText = target.innerHTML;
-    target.innerHTML = '✓';
+    // 简单的视觉反馈 - 变成绿色
+    setCopySuccess(true);
     setTimeout(() => {
-      target.innerHTML = originalText;
+      setCopySuccess(false);
     }, 1000);
   };
 
@@ -40,10 +40,16 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
     >
       <button
         onClick={handleCopy}
-        className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 p-1.5 sm:p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-colors opacity-0 group-hover:opacity-100 sm:opacity-0 touch-manipulation"
+        className={`absolute top-1.5 right-1.5 sm:top-2 sm:right-2 p-1.5 sm:p-1 rounded-md transition-colors opacity-0 group-hover:opacity-100 sm:opacity-0 touch-manipulation ${
+          copySuccess 
+            ? 'bg-green-500 hover:bg-green-600' 
+            : 'hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600'
+        }`}
         title="复制符号"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${
+          copySuccess ? 'text-white' : 'text-gray-500 dark:text-gray-400'
+        }`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
         </svg>
       </button>
