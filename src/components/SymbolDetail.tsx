@@ -128,7 +128,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
                     ))}
                   </div>
                   {/* 滚动提示渐变 */}
-                  <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-gray-100/90 to-transparent dark:from-gray-700/50 pointer-events-none rounded-b-xl" />
+                  <div className="absolute bottom-0 left-0 right-2 h-6 bg-gradient-to-t from-gray-100 via-gray-100/80 to-transparent dark:from-gray-700/50 dark:via-gray-700/70 dark:to-transparent pointer-events-none rounded-b-xl" />
                   {/* 滚动指示器 */}
                   <div className="absolute top-1 right-1 text-gray-400 dark:text-gray-500 text-xs opacity-60">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
