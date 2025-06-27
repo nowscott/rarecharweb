@@ -1,72 +1,27 @@
 # 复制符 - 特殊符号查询工具
 
+## 💡 项目灵感
+
+在日常的文字编辑和设计工作中，我们经常需要使用各种特殊符号和字符，比如数学符号（∑、∞、≈）、货币符号（€、¥、₿）、箭头符号（→、⇒、↗）等。然而，这些字符很难通过普通键盘直接输入，每次都需要通过浏览器搜索或者复制粘贴，效率极其低下。
+
+为了解决这个痛点，我开发了「复制符」这个工具。它不仅提供了丰富的特殊符号库，还具备智能搜索和分类浏览功能，让查找和复制特殊符号变得简单高效。
+
+目前项目已经收录了大量常用符号，未来我计划深入研究每个符号的历史背景、使用场景和文化含义，逐步完善详情页的说明，将「复制符」打造成一个符号百科全书，让每个符号都有自己的故事。
+
+## 📖 项目简介
+
 一个现代化的特殊符号查询和复制工具，帮助用户快速查找、浏览和复制各种特殊字符和符号。
 
 ## ✨ 功能特性
 
 - 🔍 **智能搜索** - 支持符号名称和描述的模糊搜索
 - 📂 **分类浏览** - 按符号类型分类展示，便于查找
+- 😊 **Emoji页面** - 专门的表情符号浏览和复制页面
 - 📋 **一键复制** - 点击符号卡片或复制按钮快速复制到剪贴板
 - 🎨 **现代UI** - 响应式设计，支持深色/浅色主题
 - 💫 **毛玻璃效果** - 精美的视觉效果和交互体验
 - 📱 **移动友好** - 完美适配各种屏幕尺寸
 - ⚡ **快速加载** - 基于Next.js的高性能应用
-
-## 🛠️ 技术栈
-
-- **框架**: Next.js 15.3.4
-- **语言**: TypeScript
-- **样式**: Tailwind CSS 4.0
-- **UI库**: React 19
-- **构建工具**: Next.js内置构建系统
-- **代码规范**: ESLint
-
-## 📦 安装与运行
-
-### 环境要求
-
-- Node.js 18.0 或更高版本
-- npm、yarn、pnpm 或 bun 包管理器
-
-### 克隆项目
-
-```bash
-git clone https://github.com/your-username/rarecharweb.git
-cd rarecharweb
-```
-
-### 安装依赖
-
-```bash
-npm install
-# 或
-yarn install
-# 或
-pnpm install
-# 或
-bun install
-```
-
-### 启动开发服务器
-
-```bash
-npm run dev
-# 或
-yarn dev
-# 或
-pnpm dev
-# 或
-bun dev
-```
-
-打开 [http://localhost:3000](http://localhost:3000) 查看应用。
-
-### 构建生产版本
-
-```bash
-npm run build
-npm run start
-```
 
 ## 🎯 使用方法
 
@@ -77,53 +32,6 @@ npm run start
    - 点击符号卡片查看详情并复制
    - 悬停卡片时点击右上角复制图标快速复制
 5. **查看详情**: 点击符号卡片查看详细信息，包括Unicode编码
-
-## 📁 项目结构
-
-```
-src/
-├── app/                 # Next.js App Router页面
-│   ├── about/          # 关于页面
-│   ├── layout.tsx      # 根布局组件
-│   └── page.tsx        # 主页面
-├── components/         # React组件
-│   ├── CategoryNav.tsx # 分类导航组件
-│   ├── SearchBar.tsx   # 搜索栏组件
-│   ├── SymbolCard.tsx  # 符号卡片组件
-│   ├── SymbolDetail.tsx# 符号详情弹窗
-│   └── SymbolList.tsx  # 符号列表组件
-├── hooks/              # 自定义React Hooks
-│   └── useSymbolData.ts# 符号数据管理Hook
-└── lib/                # 工具库和数据
-    ├── constants.ts    # 常量定义
-    └── symbolData.ts   # 符号数据
-```
-
-## 📄 许可证
-
-本项目采用 [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE) 开源协议。
-
-### 主要条款
-
-- ✅ **商业使用** - 允许用于商业目的
-- ✅ **修改** - 允许修改源代码
-- ✅ **分发** - 允许分发原始或修改后的代码
-- ✅ **专利使用** - 提供专利授权
-- ✅ **私人使用** - 允许私人使用
-
-### 义务要求
-
-- 📋 **包含许可证** - 分发时必须包含许可证和版权声明
-- 📋 **源码开放** - 分发时必须提供源代码
-- 📋 **相同许可证** - 衍生作品必须使用相同许可证
-- 📋 **状态变更说明** - 修改文件时必须说明变更
-- 🌐 **网络使用披露** - 通过网络提供服务时也必须提供源代码
-
-### 重要提醒
-
-AGPL-3.0 是一个强 Copyleft 许可证，特别适用于网络服务。如果您修改了本项目并通过网络向用户提供服务，您必须向这些用户提供修改后的源代码。
-
-详细条款请参阅 [LICENSE](LICENSE) 文件。
 
 ## 🎨 主要功能
 
@@ -160,6 +68,50 @@ AGPL-3.0 是一个强 Copyleft 许可证，特别适用于网络服务。如果�
 - 平板端：自适应列数
 - 移动端：单列布局，优化触摸体验
 
+## 🛠️ 技术栈
+
+- **框架**: Next.js 15.3.4
+- **语言**: TypeScript
+- **样式**: Tailwind CSS 4.0
+- **UI库**: React 19
+- **构建工具**: Next.js内置构建系统
+- **代码规范**: ESLint
+
+## 📦 安装与运行
+
+### 环境要求
+
+- Node.js 18.0 或更高版本
+- npm 包管理器
+
+### 克隆项目
+
+```bash
+git clone https://github.com/your-username/rarecharweb.git
+cd rarecharweb
+```
+
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 启动开发服务器
+
+```bash
+npm run dev
+```
+
+打开 [http://localhost:3000](http://localhost:3000) 查看应用。
+
+### 构建生产版本
+
+```bash
+npm run build
+npm run start
+```
+
 ## 🤝 贡献指南
 
 欢迎提交Issue和Pull Request来改进这个项目！
@@ -172,13 +124,37 @@ AGPL-3.0 是一个强 Copyleft 许可证，特别适用于网络服务。如果�
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本项目采用 [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE) 开源协议。
+
+### 主要条款
+
+- ✅ **商业使用** - 允许用于商业目的
+- ✅ **修改** - 允许修改源代码
+- ✅ **分发** - 允许分发原始或修改后的代码
+- ✅ **专利使用** - 提供专利授权
+- ✅ **私人使用** - 允许私人使用
+
+### 义务要求
+
+- 📋 **包含许可证** - 分发时必须包含许可证和版权声明
+- 📋 **源码开放** - 分发时必须提供源代码
+- 📋 **相同许可证** - 衍生作品必须使用相同许可证
+- 📋 **状态变更说明** - 修改文件时必须说明变更
+- 🌐 **网络使用披露** - 通过网络提供服务时也必须提供源代码
+
+### 重要提醒
+
+AGPL-3.0 是一个强 Copyleft 许可证，特别适用于网络服务。如果您修改了本项目并通过网络向用户提供服务，您必须向这些用户提供修改后的源代码。
+
+详细条款请参阅 [LICENSE](LICENSE) 文件。
 
 ## 🙏 致谢
 
 - [Next.js](https://nextjs.org/) - React框架
 - [Tailwind CSS](https://tailwindcss.com/) - CSS框架
 - [Heroicons](https://heroicons.com/) - 图标库
+- [SYMBL](https://symbl.cc/cn/) - 符号和Unicode字符参考
+- [Emojipedia](https://emojipedia.org/zh) - 表情符号百科全书
 
 ---
 
