@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SymbolData } from '@/lib/types';
 import { getSymbolClassName, applySymbolFont } from '@/lib/fontUtils';
 
@@ -10,7 +10,9 @@ interface SymbolDetailProps {
 const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   const [showCopySuccess, setShowCopySuccess] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [showScrollGradient, setShowScrollGradient] = useState(false);
   const symbolRef = useRef<HTMLDivElement>(null);
+  const notesContentRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     setIsClient(true);
@@ -33,6 +35,36 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
       };
     }
   }, [symbol]);
+
+  // 检测说明内容是否需要滚动
+  useEffect(() => {
+    if (notesContentRef.current && symbol?.notes) {
+      const element = notesContentRef.current;
+      const hasOverflow = element.scrollHeight > element.clientHeight;
+      
+      if (hasOverflow) {
+        const handleScroll = () => {
+          const isAtBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
+          setShowScrollGradient(!isAtBottom);
+        };
+        
+        // 初始设置
+        setShowScrollGradient(true);
+        
+        // 添加滚动事件监听器
+        element.addEventListener('scroll', handleScroll);
+        
+        // 清理函数
+        return () => {
+          element.removeEventListener('scroll', handleScroll);
+        };
+      } else {
+        setShowScrollGradient(false);
+      }
+    } else {
+      setShowScrollGradient(false);
+    }
+  }, [symbol?.notes]);
   
   if (!symbol) return null;
 
@@ -120,21 +152,28 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
               <div className="bg-gray-100/90 dark:bg-gray-700/50 rounded-xl p-3 border border-gray-200/50 dark:border-gray-600/30">
                 <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">说明:</h3>
                 <div className="relative">
-                  <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto scrollbar-thin pr-2">
+                  <div 
+                    ref={notesContentRef}
+                    className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-h-32 overflow-y-auto scrollbar-thin pr-2"
+                  >
                     {symbol.notes.split('\n').map((line, index) => (
                       <p key={index} className={index > 0 ? 'mt-2' : ''}>
                         {line}
                       </p>
                     ))}
                   </div>
-                  {/* 滚动提示渐变 */}
-                  <div className="absolute bottom-0 left-0 right-2 h-6 bg-gradient-to-t from-gray-100 via-gray-100/80 to-transparent dark:from-gray-700/50 dark:via-gray-700/70 dark:to-transparent pointer-events-none rounded-b-xl" />
-                  {/* 滚动指示器 */}
-                  <div className="absolute top-1 right-1 text-gray-400 dark:text-gray-500 text-xs opacity-60">
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </div>
+                  {/* 滚动提示渐变 - 仅在内容溢出时显示 */}
+                  {showScrollGradient && (
+                    <div className="absolute bottom-0 left-0 right-2 h-6 bg-gradient-to-t from-gray-100 via-gray-100/80 to-transparent dark:from-gray-700/50 dark:via-gray-700/70 dark:to-transparent pointer-events-none" />
+                  )}
+                  {/* 滚动指示器 - 仅在内容溢出时显示 */}
+                  {showScrollGradient && (
+                    <div className="absolute top-1 right-1 text-gray-400 dark:text-gray-500 text-xs opacity-60">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
