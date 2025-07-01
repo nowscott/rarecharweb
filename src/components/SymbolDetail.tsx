@@ -105,13 +105,12 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   // 使用 @use-gesture 的 useGesture hook 实现长按功能
   const bind = useGesture(
     {
-      onDragStart: ({ initial }) => {
+      onDragStart: () => {
         const startTime = Date.now();
         const duration = 800; // 800ms 长按阈值
         const delayBeforeProgress = 200; // 200ms 后才开始显示进度条
         let cancelled = false;
         let progressStarted = false;
-        let startPosition = initial;
         
         const updateProgress = () => {
           if (cancelled) return;
@@ -194,8 +193,8 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
 
   // 清理定时器
   useEffect(() => {
+    const timer = progressTimerRef.current;
     return () => {
-      const timer = progressTimerRef.current;
       if (timer) clearInterval(timer);
     };
   }, []);
