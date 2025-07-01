@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useGesture } from '@use-gesture/react';
 import { SymbolData } from '@/lib/types';
 import { getSymbolClassName, applySymbolFont } from '@/lib/fontUtils';
 
@@ -11,8 +12,12 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   const [showCopySuccess, setShowCopySuccess] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [showScrollGradient, setShowScrollGradient] = useState(false);
+  const [isLongPressing, setIsLongPressing] = useState(false);
+  const [longPressProgress, setLongPressProgress] = useState(0);
+  const preventClickRef = useRef(false);
   const symbolRef = useRef<HTMLDivElement>(null);
   const notesContentRef = useRef<HTMLDivElement>(null);
+  const progressTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   useEffect(() => {
     setIsClient(true);
@@ -68,11 +73,93 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   
   if (!symbol) return null;
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
+    if (!symbol) return;
     navigator.clipboard.writeText(symbol.symbol);
     setShowCopySuccess(true);
     setTimeout(() => setShowCopySuccess(false), 2000);
-  };
+  }, [symbol]);
+
+  // 使用 @use-gesture 的 useGesture hook 实现长按功能
+  const bind = useGesture(
+    {
+      onDragStart: ({ event }) => {
+        const startTime = Date.now();
+        const duration = 800; // 800ms 长按阈值
+        const delayBeforeProgress = 200; // 200ms 后才开始显示进度条
+        let cancelled = false;
+        let progressStarted = false;
+        
+        const updateProgress = () => {
+          if (cancelled) return;
+          
+          const elapsed = Date.now() - startTime;
+          
+          // 只有超过延迟时间才开始显示进度条
+          if (elapsed >= delayBeforeProgress && !progressStarted) {
+            setIsLongPressing(true);
+            setLongPressProgress(0);
+            progressStarted = true;
+          }
+          
+          if (progressStarted) {
+            const progressElapsed = elapsed - delayBeforeProgress;
+            const adjustedDuration = duration - delayBeforeProgress;
+            const progress = Math.min((progressElapsed / adjustedDuration) * 100, 100);
+            setLongPressProgress(progress);
+            
+            if (progress >= 100) {
+              // 长按完成，执行复制
+              handleCopy();
+              setIsLongPressing(false);
+              setLongPressProgress(0);
+              
+              // 设置阻止点击标志
+              preventClickRef.current = true;
+              setTimeout(() => {
+                preventClickRef.current = false;
+              }, 100);
+              return;
+            }
+          }
+          
+          if (elapsed < duration) {
+            requestAnimationFrame(updateProgress);
+          }
+        };
+        
+        requestAnimationFrame(updateProgress);
+        
+        // 监听取消事件
+        const cancelLongPress = () => {
+          cancelled = true;
+          if (progressStarted) {
+            setIsLongPressing(false);
+            setLongPressProgress(0);
+          }
+        };
+        
+        // 添加事件监听器
+        const handlePointerUp = () => {
+          if (Date.now() - startTime < duration) {
+            cancelLongPress();
+          }
+          document.removeEventListener('pointerup', handlePointerUp);
+          document.removeEventListener('pointercancel', cancelLongPress);
+        };
+        
+        document.addEventListener('pointerup', handlePointerUp);
+        document.addEventListener('pointercancel', cancelLongPress);
+      }
+    }
+  );
+
+  // 清理定时器
+  useEffect(() => {
+    return () => {
+      if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+    };
+  }, []);
 
   return (
     <div 
@@ -99,11 +186,49 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
         <div className="p-6 pt-16">
           {/* 符号展示区域 */}
           <div className="text-center mb-6">
-            <div 
-              ref={symbolRef}
-              className={`text-6xl mb-4 ${isClient ? getSymbolClassName('symbol-large symbol-center symbol-no-select') : 'symbol-display symbol-large symbol-center symbol-no-select'}`}
-            >
-              {symbol.symbol}
+            <div className="relative inline-block">
+              <div 
+                ref={symbolRef}
+                {...bind()}
+                className={`text-6xl mb-4 cursor-pointer select-none transition-transform duration-200 ${
+                   isClient ? getSymbolClassName('symbol-large symbol-center symbol-no-select') : 'symbol-display symbol-large symbol-center symbol-no-select'
+                 } hover:scale-105`}
+                style={{ touchAction: 'none' }}
+                title="长按复制符号"
+              >
+                {symbol.symbol}
+              </div>
+              
+              {/* 圆形进度条 */}
+              {isLongPressing && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                    {/* 背景圆环 */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="text-gray-200 dark:text-gray-600"
+                    />
+                    {/* 进度圆环 */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="#10b981"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeDasharray={`${2 * Math.PI * 45}`}
+                      strokeDashoffset={`${2 * Math.PI * 45 * (1 - longPressProgress / 100)}`}
+                      className="transition-all duration-75 ease-linear"
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{symbol.name}</h2>
             {symbol.pronunciation && (
@@ -176,17 +301,23 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
           <div className="mt-6 flex justify-center relative">
             <button
               onClick={handleCopy}
-              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className={`px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl ${
+                showCopySuccess ? 'bg-gradient-to-r from-green-500 to-green-600' : ''
+              }`}
             >
-              复制符号
+              {showCopySuccess ? (
+                <div className="flex items-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>复制成功！</span>
+                </div>
+              ) : (
+                '复制符号'
+              )}
             </button>
             
-            {/* 复制成功提示 */}
-            {showCopySuccess && (
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg animate-pulse">
-                复制成功！
-              </div>
-            )}
+
           </div>
         </div>
       </div>

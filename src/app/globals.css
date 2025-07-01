@@ -82,6 +82,64 @@ body {
   }
 }
 
+/* 长按复制功能动画 */
+@keyframes longPressRipple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes copySuccess {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes progressRing {
+  0% {
+    stroke-dashoffset: 175.929;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+/* 长按状态样式 */
+.long-press-active {
+  animation: pulseGlow 1s ease-in-out infinite;
+}
+
+.copy-success-animation {
+  animation: copySuccess 0.6s ease-out;
+}
+
+.ripple-effect {
+  animation: longPressRipple 0.6s ease-out;
+}
+
 * {
   font-family: 'Smiley Sans Oblique', Arial, Helvetica, sans-serif;
   font-weight: 500;
