@@ -70,8 +70,6 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
       setShowScrollGradient(false);
     }
   }, [symbol?.notes]);
-  
-  if (!symbol) return null;
 
   const handleCopy = useCallback(() => {
     if (!symbol) return;
@@ -83,7 +81,7 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   // 使用 @use-gesture 的 useGesture hook 实现长按功能
   const bind = useGesture(
     {
-      onDragStart: ({ event }) => {
+      onDragStart: () => {
         const startTime = Date.now();
         const duration = 800; // 800ms 长按阈值
         const delayBeforeProgress = 200; // 200ms 后才开始显示进度条
@@ -157,9 +155,12 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   // 清理定时器
   useEffect(() => {
     return () => {
-      if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+      const timer = progressTimerRef.current;
+      if (timer) clearInterval(timer);
     };
   }, []);
+
+  if (!symbol) return null;
 
   return (
     <div 

@@ -4,6 +4,7 @@ import React from 'react';
 import SymbolCard from '@/components/SymbolCard';
 import SymbolDetail from '@/components/SymbolDetail';
 import { useState } from 'react';
+import { SymbolData } from '@/lib/types';
 
 const testSymbols = [
   { symbol: '★', name: '实心星星' },
@@ -25,11 +26,12 @@ const testDetailSymbol = {
   name: '实心星星',
   category: ['符号', '装饰'],
   pronunciation: 'xīng xīng',
+  searchTerms: ['星星', '五角星', '实心', '装饰', '符号'],
   notes: '这是一个实心的五角星符号，常用于表示重要性、评级或装饰。在很多文化中，星星都象征着希望、梦想和指引。'
 };
 
 export default function TestLongPressPage() {
-  const [selectedSymbol, setSelectedSymbol] = useState<any>(null);
+  const [selectedSymbol, setSelectedSymbol] = useState<SymbolData | null>(null);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">

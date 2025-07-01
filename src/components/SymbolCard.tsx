@@ -39,7 +39,7 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
   // 使用 @use-gesture 的 useGesture hook
   const bind = useGesture(
     {
-      onDragStart: ({ event }) => {
+      onDragStart: () => {
         const startTime = Date.now();
         const duration = 600; // 600ms 长按阈值
         const delayBeforeProgress = 200; // 200ms 后才开始显示进度条
@@ -117,18 +117,20 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
   // 清理定时器
   useEffect(() => {
     return () => {
-      if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+      const timer = progressTimerRef.current;
+      if (timer) clearInterval(timer);
     };
   }, []);
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    if (preventClickRef.current) {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
-    }
-    // 点击事件现在由 useLongPress 处理
-  }, []);
+  // handleClick 已被长按逻辑替代，暂时保留以备将来使用
+  // const handleClick = useCallback((e: React.MouseEvent) => {
+  //   if (preventClickRef.current) {
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //     return;
+  //   }
+  //   // 点击事件现在由 useLongPress 处理
+  // }, []);
 
   return (
     <div 
