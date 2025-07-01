@@ -55,6 +55,28 @@ export const aboutConfig = {
     totalSymbols: '符号总数'
   },
   
+  // 其他作品
+  projects: [
+    {
+      name: 'IndWebIndex',
+      description: '使用Next.js + Notion API + Tailwind CSS实现的简单部署的个人索引网站',
+      englishDescription: 'A simple personal index website deployed using Next.js + Notion API',
+      url: 'https://nowscott.top/',
+      tags: ['Next.js', 'Notion API', 'Tailwind CSS'],
+      status: 'active',
+      icon: 'globe'
+    },
+    {
+      name: 'EverydayTechNews',
+      description: '基于Python爬虫+Github Action实现每天早上自动发送科技新闻到邮箱',
+      englishDescription: 'Using Python web scraping and Github Action to automatically send tech news to email every morning',
+      url: 'https://mailist.nowscott.top/',
+      tags: ['Python', 'Github Action', '爬虫'],
+      status: 'active',
+      icon: 'email'
+    }
+  ],
+
   // 联系方式
   contacts: [
     {
@@ -99,5 +121,6 @@ export const iconPaths = {
   document: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
   copy: "M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z",
   email: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+  globe: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM11 19.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z",
   xiaohongshu: "M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.125 4.5h2.25c.621 0 1.125.504 1.125 1.125v.75c0 .621-.504 1.125-1.125 1.125h-2.25c-.621 0-1.125-.504-1.125-1.125v-.75c0-.621.504-1.125 1.125-1.125zm0 4.5h2.25c.621 0 1.125.504 1.125 1.125v.75c0 .621-.504 1.125-1.125 1.125h-2.25c-.621 0-1.125-.504-1.125-1.125v-.75c0-.621.504-1.125 1.125-1.125z"
 };

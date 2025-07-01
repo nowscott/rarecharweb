@@ -15,6 +15,7 @@ import {
   InstructionsSection,
   VersionSection,
   ContactSection,
+  ProjectsSection,
   FooterSection,
   LoadingState
 } from '@/components/AboutComponents';
@@ -63,6 +64,11 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
           <VersionSection versions={versions} stats={stats} />
           <ContactSection />
+        </div>
+
+        {/* 第三排：我的其他作品 */}
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 mb-6 sm:mb-8">
+          <ProjectsSection />
         </div>
         
         {/* 底部版权信息 */}
