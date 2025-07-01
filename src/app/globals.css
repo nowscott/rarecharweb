@@ -84,6 +84,19 @@ select {
   font-size: 16px !important; /* iOS Safari 需要至少 16px 才不会放大 */
   transform: translateZ(0); /* 启用硬件加速，改善性能 */
   -webkit-appearance: none; /* 移除默认样式 */
+  appearance: none; /* 标准属性，实现兼容性 */
+}
+
+/* 只对没有自定义圆角的输入框移除默认圆角 */
+input[type="search"]:not([class*="rounded"]),
+input[type="text"]:not([class*="rounded"]),
+input[type="email"]:not([class*="rounded"]),
+input[type="password"]:not([class*="rounded"]),
+input[type="tel"]:not([class*="rounded"]),
+input[type="url"]:not([class*="rounded"]),
+input[type="number"]:not([class*="rounded"]),
+textarea:not([class*="rounded"]),
+select:not([class*="rounded"]) {
   border-radius: 0; /* 移除 iOS 默认圆角 */
 }
 
