@@ -18,7 +18,7 @@ import {
   ProjectsSection,
   FooterSection,
   LoadingState
-} from '@/components/AboutComponents';
+} from '@/components/about';
 
 export default function About() {
   const { symbols: symbolData, categoryStats: symbolCategoryStats, version: symbolVersion, loading: symbolLoading } = useCachedSymbolData({ dataType: 'symbol' });
