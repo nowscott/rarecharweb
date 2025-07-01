@@ -39,12 +39,14 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
   // 使用 @use-gesture 的 useGesture hook
   const bind = useGesture(
     {
-      onDragStart: () => {
+      onDragStart: ({ initial }) => {
         const startTime = Date.now();
         const duration = 600; // 600ms 长按阈值
         const delayBeforeProgress = 200; // 200ms 后才开始显示进度条
+        const maxDragDistance = 10; // 最大允许的拖拽距离（像素）
         let cancelled = false;
         let progressStarted = false;
+        let startPosition = initial;
         
         const updateProgress = () => {
           if (cancelled) return;
@@ -110,6 +112,21 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
         
         document.addEventListener('pointerup', handlePointerUp);
         document.addEventListener('pointercancel', cancelLongPress);
+      },
+      onDrag: ({ movement, cancel }) => {
+        // 检测拖拽距离，如果超过阈值则取消长按
+        const [mx, my] = movement;
+        const distance = Math.sqrt(mx * mx + my * my);
+        
+        if (distance > 10) { // 10像素的拖拽阈值
+          cancel();
+          setIsLongPressing(false);
+          setLongPressProgress(0);
+          preventClickRef.current = true;
+          setTimeout(() => {
+            preventClickRef.current = false;
+          }, 100);
+        }
       }
     }
   );

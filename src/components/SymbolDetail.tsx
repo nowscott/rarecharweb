@@ -81,12 +81,13 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
   // 使用 @use-gesture 的 useGesture hook 实现长按功能
   const bind = useGesture(
     {
-      onDragStart: () => {
+      onDragStart: ({ initial }) => {
         const startTime = Date.now();
         const duration = 800; // 800ms 长按阈值
         const delayBeforeProgress = 200; // 200ms 后才开始显示进度条
         let cancelled = false;
         let progressStarted = false;
+        let startPosition = initial;
         
         const updateProgress = () => {
           if (cancelled) return;
@@ -148,6 +149,21 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
         
         document.addEventListener('pointerup', handlePointerUp);
         document.addEventListener('pointercancel', cancelLongPress);
+      },
+      onDrag: ({ movement, cancel }) => {
+        // 检测拖拽距离，如果超过阈值则取消长按
+        const [mx, my] = movement;
+        const distance = Math.sqrt(mx * mx + my * my);
+        
+        if (distance > 10) { // 10像素的拖拽阈值
+          cancel();
+          setIsLongPressing(false);
+          setLongPressProgress(0);
+          preventClickRef.current = true;
+          setTimeout(() => {
+            preventClickRef.current = false;
+          }, 100);
+        }
       }
     }
   );
