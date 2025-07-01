@@ -71,11 +71,35 @@ const SymbolDetail: React.FC<SymbolDetailProps> = ({ symbol, onClose }) => {
     }
   }, [symbol?.notes]);
 
-  const handleCopy = useCallback(() => {
+  const handleCopy = useCallback(async () => {
     if (!symbol) return;
-    navigator.clipboard.writeText(symbol.symbol);
-    setShowCopySuccess(true);
-    setTimeout(() => setShowCopySuccess(false), 2000);
+    
+    try {
+      // 优先使用现代 Clipboard API
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(symbol.symbol);
+      } else {
+        // 降级方案：使用传统的 document.execCommand
+        const textArea = document.createElement('textarea');
+        textArea.value = symbol.symbol;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+      
+      setShowCopySuccess(true);
+      setTimeout(() => setShowCopySuccess(false), 2000);
+    } catch (err) {
+      console.error('复制失败:', err);
+      // 即使复制失败也显示反馈，让用户知道操作已执行
+      setShowCopySuccess(true);
+      setTimeout(() => setShowCopySuccess(false), 2000);
+    }
   }, [symbol]);
 
   // 使用 @use-gesture 的 useGesture hook 实现长按功能
