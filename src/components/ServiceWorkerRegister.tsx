@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 // Service Worker 注册组件
 export default function ServiceWorkerRegister() {
@@ -106,7 +106,7 @@ export default function ServiceWorkerRegister() {
   // 将工具函数暴露到全局，供其他组件使用
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as any).fontCacheUtils = {
+      (window as unknown as { fontCacheUtils: { clearFontCache: () => Promise<boolean>; getCacheStatus: () => Promise<{ cacheSize: number; cachedUrls: string[] } | null> } }).fontCacheUtils = {
         clearFontCache,
         getCacheStatus
       };

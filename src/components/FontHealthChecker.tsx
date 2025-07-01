@@ -26,7 +26,15 @@ interface DebugInfo {
 export default function FontHealthChecker() {
   const [isOpen, setIsOpen] = useState(false);
   const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
-  const [fontCacheStatus, setFontCacheStatus] = useState<any>(null);
+  const [fontCacheStatus, setFontCacheStatus] = useState<{
+    isValid: boolean;
+    ageHours: number;
+    timestamp: number;
+    version: string;
+    loadedFonts: number;
+    cachedFonts: number;
+    availableFonts: number;
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const runHealthCheck = async () => {

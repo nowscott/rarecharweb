@@ -9,8 +9,6 @@ const nextConfig: NextConfig = {
     'localhost'
   ],
   
-  // 字体优化配置
-  optimizeFonts: true,
   
   // 静态资源缓存配置
   async headers() {
