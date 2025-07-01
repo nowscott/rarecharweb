@@ -33,7 +33,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
       <div className="grid grid-cols-2 sm:flex sm:justify-center gap-6 sm:gap-8">
         {stats.categoryStats.slice(0, aboutConfig.hero.displayCount).map((stat, index) => (
           <div key={index} className="flex flex-col items-center">
-            <div className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">{stat.count}</div>
+            <div className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">{stat.count}</div>
             <div className="text-sm sm:text-base opacity-90 font-medium">{stat.name}</div>
           </div>
         ))}
