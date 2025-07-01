@@ -89,8 +89,22 @@ export const getSymbolFontStackForDevice = (deviceType: DeviceType): string => {
   return buildFontStack(fontStack);
 };
 
-// 检测字体是否可用 - 改进的检测方法
-export const isFontAvailable = (fontName: string): boolean => {
+// 检测字体是否可用 - 使用字体缓存系统
+export const isFontAvailable = async (fontName: string): Promise<boolean> => {
+  if (typeof window === 'undefined') return false;
+
+  try {
+    // 使用字体缓存系统的检测功能
+    const { isFontAvailable: cacheCheck } = await import('@/lib/fontCache');
+    return cacheCheck(fontName);
+  } catch (error) {
+    console.warn(`Font availability check failed for ${fontName}:`, error);
+    return false;
+  }
+};
+
+// 同步版本的字体检测（向后兼容）
+export const isFontAvailableSync = (fontName: string): boolean => {
   if (typeof window === 'undefined') return false;
   
   try {
@@ -183,31 +197,13 @@ export const waitForFontsLoad = async (): Promise<void> => {
 
 
 
-// 预加载关键字体 - 优化的预加载策略
-export const preloadCriticalFonts = (): void => {
+// 预加载关键字体 - 集成字体缓存系统
+export const preloadCriticalFonts = async (): Promise<void> => {
   if (typeof window === 'undefined') return;
-  
-  const deviceType = getDeviceType();
-  const fontStack = FONT_STACKS[deviceType];
-  
-  // 检查系统字体可用性，只预加载不可用的字体
-  const systemFonts = ['Apple Color Emoji', 'Segoe UI Emoji', 'Apple Symbols', 'Segoe UI Symbol'];
-  
-  fontStack.primary.forEach(fontFamily => {
-    // 系统字体无需预加载
-    if (systemFonts.includes(fontFamily)) {
-      console.debug(`System font detected, skipping preload: ${fontFamily}`);
-      return;
-    }
-    
-    // 检查字体是否已经可用
-    if (isFontAvailable(fontFamily)) {
-      console.debug(`Font already available, skipping preload: ${fontFamily}`);
-      return;
-    }
-    
-    console.debug(`Font not available, would need external loading: ${fontFamily}`);
-  });
+
+  // 使用字体缓存系统的预加载功能
+  const { preloadCriticalFonts: cachePreload } = await import('@/lib/fontCache');
+  await cachePreload();
 };
 
 // 字体健康检查 - 诊断字体加载问题
@@ -232,8 +228,8 @@ export const checkFontHealth = (): Promise<{available: string[], unavailable: st
         available.push(fontName);
         return;
       }
-      
-      if (isFontAvailable(fontName)) {
+
+      if (isFontAvailableSync(fontName)) {
         available.push(fontName);
       } else {
         unavailable.push(fontName);

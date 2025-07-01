@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getFontDebugInfo } from '@/lib/fontUtils';
+import { getFontCacheStatus } from '@/lib/fontCache';
 
 interface FontHealthData {
   available: string[];
@@ -23,15 +24,20 @@ interface DebugInfo {
 }
 
 export default function FontHealthChecker() {
+  const [isOpen, setIsOpen] = useState(false);
   const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
+  const [fontCacheStatus, setFontCacheStatus] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
 
   const runHealthCheck = async () => {
     setIsLoading(true);
     try {
       const info = await getFontDebugInfo();
       setDebugInfo(info as DebugInfo);
+      
+      // 获取字体缓存状态
+      const cacheStatus = getFontCacheStatus();
+      setFontCacheStatus(cacheStatus);
     } catch (error) {
       console.error('Font health check failed:', error);
     } finally {
@@ -39,15 +45,17 @@ export default function FontHealthChecker() {
     }
   };
 
+
+
   useEffect(() => {
     // 自动运行一次健康检查
     runHealthCheck();
   }, []);
 
-  if (!isVisible) {
+  if (!isOpen) {
     return (
       <button
-        onClick={() => setIsVisible(true)}
+        onClick={() => setIsOpen(true)}
         className="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm shadow-lg transition-colors"
         title="字体健康检查"
       >
@@ -61,7 +69,7 @@ export default function FontHealthChecker() {
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">字体健康检查</h3>
         <button
-          onClick={() => setIsVisible(false)}
+          onClick={() => setIsOpen(false)}
           className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         >
           ✕
@@ -83,10 +91,25 @@ export default function FontHealthChecker() {
               <h4 className="font-medium text-gray-900 dark:text-white mb-1">设备信息</h4>
               <div className="text-gray-600 dark:text-gray-300 space-y-1">
                 <p>设备类型: {debugInfo.deviceType}</p>
-                <p>浏览器: {debugInfo.isSafari ? 'Safari' : debugInfo.isIOS ? 'iOS浏览器' : debugInfo.isAndroid ? 'Android浏览器' : '桌面浏览器'}</p>
+                <p>iOS设备: {debugInfo.isIOS ? '✅' : '❌'}</p>
+                <p>Android设备: {debugInfo.isAndroid ? '✅' : '❌'}</p>
+                <p>Safari浏览器: {debugInfo.isSafari ? '✅' : '❌'}</p>
                 <p>字体API支持: {debugInfo.fontLoadingAPISupported ? '✅' : '❌'}</p>
               </div>
             </div>
+
+            {fontCacheStatus && (
+               <div>
+                 <h4 className="font-medium text-gray-900 dark:text-white mb-1">字体缓存状态</h4>
+                 <div className="text-gray-600 dark:text-gray-300 space-y-1">
+                   <p>缓存有效: {fontCacheStatus.isValid ? '✅' : '❌'}</p>
+                   <p>缓存时间: {fontCacheStatus.ageHours}小时前</p>
+                   <p>已加载字体: {fontCacheStatus.loadedFonts}个</p>
+                   <p>可用字体: {fontCacheStatus.availableFonts}个</p>
+
+                 </div>
+               </div>
+             )}
 
             <div>
               <h4 className="font-medium text-gray-900 dark:text-white mb-1">可用字体 ({debugInfo.fontHealth.available.length})</h4>
@@ -140,7 +163,7 @@ export default function FontHealthChecker() {
 
             <div className="pt-2 border-t border-gray-200 dark:border-gray-600">
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                检查时间: {new Date(debugInfo.timestamp).toLocaleString()}
+                检查时间: {new Date().toLocaleString()}
               </p>
             </div>
           </div>

@@ -8,6 +8,34 @@ const nextConfig: NextConfig = {
     '*.local',
     'localhost'
   ],
+  
+  // 字体优化配置
+  optimizeFonts: true,
+  
+  // 静态资源缓存配置
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // 字体文件缓存配置
+      {
+        source: '/fonts/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
