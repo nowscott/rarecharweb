@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/nowscott/rarecharweb/compare/v1.4.0...v1.5.0) (2025-07-01)
+
+
+### Features
+
+* **about:** 添加其他作品展示区块 ([cd5e15b](https://github.com/nowscott/rarecharweb/commit/cd5e15b42389eb5e8768314305afe6e8eb6af376))
+
 # [1.4.0](https://github.com/nowscott/rarecharweb/compare/v1.3.0...v1.4.0) (2025-06-27)
 
 
