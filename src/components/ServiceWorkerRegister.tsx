@@ -15,27 +15,27 @@ export default function ServiceWorkerRegister() {
 
   const registerServiceWorker = async () => {
     try {
-      console.log('[SW] Registering service worker...');
+      // console.log('[SW] Registering service worker...');
       
       const registration = await navigator.serviceWorker.register('/sw.js', {
         scope: '/'
       });
 
-      console.log('[SW] Service worker registered successfully:', registration.scope);
+      // console.log('[SW] Service worker registered successfully:', registration.scope);
 
       // 监听更新
       registration.addEventListener('updatefound', () => {
         const newWorker = registration.installing;
         if (newWorker) {
-          console.log('[SW] New service worker installing...');
+          // console.log('[SW] New service worker installing...');
           
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed') {
               if (navigator.serviceWorker.controller) {
-                console.log('[SW] New service worker installed, update available');
+                // console.log('[SW] New service worker installed, update available');
                 // 可以在这里通知用户有更新
               } else {
-                console.log('[SW] Service worker installed for the first time');
+                // console.log('[SW] Service worker installed for the first time');
               }
             }
           });
@@ -44,7 +44,7 @@ export default function ServiceWorkerRegister() {
 
       // 监听控制器变化
       navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('[SW] Service worker controller changed');
+        // console.log('[SW] Service worker controller changed');
       });
 
     } catch (error) {

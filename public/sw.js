@@ -12,16 +12,16 @@ const FONT_URLS = [
 
 // 安装事件 - 预缓存字体资源
 self.addEventListener('install', event => {
-  console.log('[SW] Installing service worker for font caching...');
+  // console.log('[SW] Installing service worker for font caching...');
   
   event.waitUntil(
     caches.open(FONT_CACHE_NAME)
       .then(cache => {
-        console.log('[SW] Caching font resources...');
+        // console.log('[SW] Caching font resources...');
         return cache.addAll(FONT_URLS);
       })
       .then(() => {
-        console.log('[SW] Font resources cached successfully');
+        // console.log('[SW] Font resources cached successfully');
         return self.skipWaiting();
       })
       .catch(error => {
@@ -32,7 +32,7 @@ self.addEventListener('install', event => {
 
 // 激活事件 - 清理旧缓存
 self.addEventListener('activate', event => {
-  console.log('[SW] Activating service worker...');
+  // console.log('[SW] Activating service worker...');
   
   event.waitUntil(
     caches.keys()
@@ -40,14 +40,14 @@ self.addEventListener('activate', event => {
         return Promise.all(
           cacheNames.map(cacheName => {
             if (cacheName !== FONT_CACHE_NAME && cacheName.startsWith('rarechar-fonts-')) {
-              console.log('[SW] Deleting old cache:', cacheName);
+              // console.log('[SW] Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('[SW] Service worker activated');
+        // console.log('[SW] Service worker activated');
         return self.clients.claim();
       })
   );
@@ -70,12 +70,12 @@ self.addEventListener('fetch', event => {
           return cache.match(event.request)
             .then(cachedResponse => {
               if (cachedResponse) {
-                console.log('[SW] Serving font from cache:', url);
+                // console.log('[SW] Serving font from cache:', url);
                 return cachedResponse;
               }
               
               // 如果缓存中没有，则从网络获取并缓存
-              console.log('[SW] Fetching font from network:', url);
+              // console.log('[SW] Fetching font from network:', url);
               return fetch(event.request)
                 .then(response => {
                   // 检查响应是否有效
@@ -83,7 +83,7 @@ self.addEventListener('fetch', event => {
                     // 克隆响应用于缓存
                     const responseClone = response.clone();
                     cache.put(event.request, responseClone);
-                    console.log('[SW] Font cached:', url);
+                    // console.log('[SW] Font cached:', url);
                   }
                   return response;
                 })
@@ -104,7 +104,7 @@ self.addEventListener('message', event => {
     event.waitUntil(
       caches.delete(FONT_CACHE_NAME)
         .then(() => {
-          console.log('[SW] Font cache cleared');
+          // console.log('[SW] Font cache cleared');
           event.ports[0].postMessage({ success: true });
         })
         .catch(error => {
