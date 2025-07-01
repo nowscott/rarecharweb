@@ -140,34 +140,17 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, onClick }) => {
        }`}
       style={{ touchAction: 'none' }}
     >
-      {/* 圆形进度条 */}
+      {/* 长按动画指示器 */}
       {isLongPressing && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg className="w-20 h-20 sm:w-24 sm:h-24 transform -rotate-90" viewBox="0 0 100 100">
-            {/* 背景圆环 */}
-            <circle
-              cx="50"
-              cy="50"
-              r="45"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              className="text-gray-200 dark:text-gray-600"
-            />
-            {/* 进度圆环 */}
-            <circle
-              cx="50"
-              cy="50"
-              r="45"
-              fill="none"
-              stroke="#10b981"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeDasharray={`${2 * Math.PI * 45}`}
-              strokeDashoffset={`${2 * Math.PI * 45 * (1 - longPressProgress / 100)}`}
-              className="transition-all duration-75 ease-linear"
-            />
-          </svg>
+        <div className="absolute inset-0 pointer-events-none">
+          <div 
+            className="absolute inset-0 bg-emerald-500/20 rounded-2xl transition-all duration-1000 ease-out"
+            style={{
+              transform: `scale(${longPressProgress / 100})`,
+              opacity: 0.8 - (longPressProgress / 100) * 0.3,
+              willChange: 'transform, opacity'
+            }}
+          />
         </div>
       )}
 
