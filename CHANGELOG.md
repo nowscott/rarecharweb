@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/nowscott/rarecharweb/compare/v1.5.0...v1.6.0) (2025-07-01)
+
+
+### Features
+
+* **性能优化:** 实现字体缓存系统和Service Worker集成 ([2f68766](https://github.com/nowscott/rarecharweb/commit/2f687669b01931507aa1a1e8e266f168ad120173))
+
 # [1.5.0](https://github.com/nowscott/rarecharweb/compare/v1.4.0...v1.5.0) (2025-07-01)
 
 
