@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { aboutConfig } from './aboutConfig';
-import { SymbolData } from './types';
+import { SymbolData } from '../core/types';
 
 // 类型定义
 export interface CategoryStat {

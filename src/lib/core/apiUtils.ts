@@ -1,4 +1,4 @@
-import { SymbolData, SymbolDataResponse, CategoryStat } from '@/lib/types';
+import { SymbolData, SymbolDataResponse, CategoryStat } from './types';
 
 // 缓存接口
 interface CachedData {

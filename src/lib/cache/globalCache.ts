@@ -1,5 +1,5 @@
-import { SymbolDataResponse, EmojiData, EmojiDataResponse } from './types';
-import { fetchWithTimeout, calculateCategoryStats } from './apiUtils';
+import { SymbolDataResponse, EmojiData, EmojiDataResponse } from '../core/types';
+import { fetchWithTimeout, calculateCategoryStats } from '../core/apiUtils';
 
 // 缓存接口
 interface GlobalCachedData {

@@ -1,14 +1,14 @@
 'use client';
 
 import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
-import NavigationButtons from '@/components/NavigationButtons';
-import { aboutConfig } from '@/lib/aboutConfig';
+import { NavigationButtons } from '@/components/navigation';
+import { aboutConfig } from '@/lib/about/aboutConfig';
 import { 
   useBackdoorClick, 
   clearCacheAndReload, 
   generateStats, 
   generateVersions 
-} from '@/lib/aboutUtils';
+} from '@/lib/about/aboutUtils';
 import {
   HeroSection,
   FeaturesSection,
@@ -18,7 +18,7 @@ import {
   ProjectsSection,
   FooterSection,
   LoadingState
-} from '@/components/AboutComponents';
+} from '@/components/about';
 
 export default function About() {
   const { symbols: symbolData, categoryStats: symbolCategoryStats, version: symbolVersion, loading: symbolLoading } = useCachedSymbolData({ dataType: 'symbol' });

@@ -5,25 +5,23 @@ import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import HomeClient from '@/components/HomeClient';
 import { LoadingSpinner, ErrorDisplay } from '@/components/ui';
 
-export default function EmojiPage() {
+export default function Home() {
   const { symbols, categoryStats, loading, error } = useCachedSymbolData({
-    dataType: 'emoji'
+    dataType: 'symbol'
   });
 
   if (loading) {
-    return <LoadingSpinner message="加载Emoji中..." />;
+    return <LoadingSpinner message="加载符号中..." />;
   }
 
   if (error) {
-    return <ErrorDisplay message="Emoji加载失败" error={error} />;
+    return <ErrorDisplay message="符号加载失败" error={error} />;
   }
 
   return (
     <HomeClient 
       symbols={symbols} 
-      categoryStats={categoryStats}
-      pageTitle="Emoji"
-      pageDescription="探索丰富的Emoji世界，找到完美的表达方式"
+      categoryStats={categoryStats} 
     />
   );
 }

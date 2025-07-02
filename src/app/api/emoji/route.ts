@@ -1,4 +1,4 @@
-import { getEmojiData } from '@/lib/globalCache';
+import { getEmojiData } from '@/lib/cache/globalCache';
 
 export async function GET() {
   try {

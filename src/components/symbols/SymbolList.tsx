@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { SymbolData } from '@/lib/types';
-import SymbolCard from '@/components/SymbolCard';
-import SymbolDetail from '@/components/SymbolDetail';
+import { SymbolData } from '@/lib/core/types';
+import SymbolCard from './SymbolCard';
+import SymbolDetail from './SymbolDetail';
 
 interface SymbolListProps {
   displayedSymbols: SymbolData[];

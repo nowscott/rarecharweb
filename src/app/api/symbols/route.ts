@@ -1,4 +1,4 @@
-import { getSymbolData } from '@/lib/globalCache';
+import { getSymbolData } from '@/lib/cache/globalCache';
 
 export async function GET() {
   try {
