@@ -2,13 +2,13 @@
 
 import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import NavigationButtons from '@/components/NavigationButtons';
-import { aboutConfig } from '@/lib/aboutConfig';
+import { aboutConfig } from '@/lib/about/aboutConfig';
 import { 
   useBackdoorClick, 
   clearCacheAndReload, 
   generateStats, 
   generateVersions 
-} from '@/lib/aboutUtils';
+} from '@/lib/about/aboutUtils';
 import {
   HeroSection,
   FeaturesSection,

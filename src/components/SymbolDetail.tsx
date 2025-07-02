@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SymbolData } from '@/lib/types';
-import { getSymbolClassName, applySymbolFont } from '@/lib/fontUtils';
+import { SymbolData } from '@/lib/core/types';
+import { getSymbolClassName, applySymbolFont } from '@/lib/font/fontUtils';
 
 interface SymbolDetailProps {
   symbol: SymbolData | null;

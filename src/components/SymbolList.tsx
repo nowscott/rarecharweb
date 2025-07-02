@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SymbolData } from '@/lib/types';
+import { SymbolData } from '@/lib/core/types';
 import SymbolCard from '@/components/SymbolCard';
 import SymbolDetail from '@/components/SymbolDetail';
 

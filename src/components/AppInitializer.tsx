@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { preloadAllData, getCacheStatus } from '@/lib/globalCache';
-import { initializeFontCache, getFontCacheStatus } from '@/lib/fontCache';
+import { preloadAllData, getCacheStatus } from '@/lib/cache/globalCache';
+import { initializeFontCache, getFontCacheStatus } from '@/lib/font/fontCache';
 
 interface AppInitializerProps {
   children: React.ReactNode;

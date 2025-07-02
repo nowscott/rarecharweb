@@ -95,7 +95,7 @@ export const isFontAvailable = async (fontName: string): Promise<boolean> => {
 
   try {
     // 使用字体缓存系统的检测功能
-    const { isFontAvailable: cacheCheck } = await import('@/lib/fontCache');
+    const { isFontAvailable: cacheCheck } = await import('./fontCache');
     return cacheCheck(fontName);
   } catch (error) {
     console.warn(`Font availability check failed for ${fontName}:`, error);
@@ -202,7 +202,7 @@ export const preloadCriticalFonts = async (): Promise<void> => {
   if (typeof window === 'undefined') return;
 
   // 使用字体缓存系统的预加载功能
-  const { preloadCriticalFonts: cachePreload } = await import('@/lib/fontCache');
+  const { preloadCriticalFonts: cachePreload } = await import('./fontCache');
   await cachePreload();
 };
 

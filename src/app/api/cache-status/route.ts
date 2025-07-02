@@ -1,4 +1,4 @@
-import { getCacheStatus } from '@/lib/globalCache';
+import { getCacheStatus } from '@/lib/cache/globalCache';
 
 export async function GET() {
   try {

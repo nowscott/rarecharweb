@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { aboutConfig, iconPaths } from '@/lib/aboutConfig';
+import { aboutConfig, iconPaths } from '@/lib/about/aboutConfig';
 import { Icon } from './Icon';
 
 // 联系方式组件

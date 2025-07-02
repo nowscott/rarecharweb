@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { SymbolData, CategoryStat } from '@/lib/types';
-import { getCacheStatus, getSymbolData, getEmojiData } from '@/lib/globalCache';
+import { SymbolData, CategoryStat } from '@/lib/core/types';
+import { getCacheStatus, getSymbolData, getEmojiData } from '@/lib/cache/globalCache';
 
 interface UseCachedSymbolDataOptions {
   dataType: 'symbol' | 'emoji';

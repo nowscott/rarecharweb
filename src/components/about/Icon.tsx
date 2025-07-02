@@ -1,4 +1,4 @@
-import { iconPaths } from '@/lib/aboutConfig';
+import { iconPaths } from '@/lib/about/aboutConfig';
 
 // 图标组件
 interface IconProps {

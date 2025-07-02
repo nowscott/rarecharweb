@@ -1,4 +1,4 @@
-import { aboutConfig } from '@/lib/aboutConfig';
+import { aboutConfig } from '@/lib/about/aboutConfig';
 
 // 使用说明组件
 export function InstructionsSection() {

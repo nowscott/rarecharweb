@@ -1,5 +1,5 @@
-import { aboutConfig } from '@/lib/aboutConfig';
-import { AboutStats } from '@/lib/aboutUtils';
+import { aboutConfig } from '@/lib/about/aboutConfig';
+import { AboutStats } from '@/lib/about/aboutUtils';
 
 // Hero区域组件
 interface HeroSectionProps {

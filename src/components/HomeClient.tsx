@@ -2,12 +2,12 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { SymbolData, CategoryStat } from '@/lib/types';
-import { processSymbols } from '@/lib/symbolUtils';
+import { SymbolData, CategoryStat } from '@/lib/core/types';
+import { processSymbols } from '@/lib/core/symbolUtils';
 import SearchBar from '@/components/SearchBar';
 import CategoryNav from '@/components/CategoryNav';
 import SymbolList from '@/components/SymbolList';
-import { optimizeSymbolRendering, waitForFontsLoad } from '@/lib/fontUtils';
+import { optimizeSymbolRendering, waitForFontsLoad } from '@/lib/font/fontUtils';
 
 interface HomeClientProps {
   symbols: SymbolData[];

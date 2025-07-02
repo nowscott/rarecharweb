@@ -1,5 +1,5 @@
-import { aboutConfig } from '@/lib/aboutConfig';
-import { AboutVersions, AboutStats, formatUpdateTime } from '@/lib/aboutUtils';
+import { aboutConfig } from '@/lib/about/aboutConfig';
+import { AboutVersions, AboutStats, formatUpdateTime } from '@/lib/about/aboutUtils';
 
 // 版本信息组件
 interface VersionSectionProps {

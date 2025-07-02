@@ -1,4 +1,4 @@
-import { aboutConfig } from '@/lib/aboutConfig';
+import { aboutConfig } from '@/lib/about/aboutConfig';
 import packageJson from '../../../package.json';
 
 // 底部版权信息组件
