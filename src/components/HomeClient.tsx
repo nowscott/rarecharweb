@@ -6,7 +6,7 @@ import { SymbolData, CategoryStat } from '@/lib/core/types';
 import { processSymbols } from '@/lib/core/symbolUtils';
 import SearchBar from '@/components/SearchBar';
 import CategoryNav from '@/components/CategoryNav';
-import SymbolList from '@/components/SymbolList';
+import { SymbolList } from '@/components/symbols';
 import { optimizeSymbolRendering, waitForFontsLoad } from '@/lib/font/fontUtils';
 
 interface HomeClientProps {
