@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 import "./styles/globals.css";
 import AppInitializer from '@/components/AppInitializer';
-import FontHealthChecker from '@/components/FontHealthChecker';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import FontHealthChecker from '@/components/FontHealthChecker';
 
 export const metadata: Metadata = {
   title: "复制符 - 特殊符号查询工具",

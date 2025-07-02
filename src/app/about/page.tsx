@@ -1,7 +1,7 @@
 'use client';
 
 import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
-import NavigationButtons from '@/components/NavigationButtons';
+import { NavigationButtons } from '@/components/navigation';
 import { aboutConfig } from '@/lib/about/aboutConfig';
 import { 
   useBackdoorClick, 

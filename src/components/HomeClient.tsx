@@ -4,8 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { SymbolData, CategoryStat } from '@/lib/core/types';
 import { processSymbols } from '@/lib/core/symbolUtils';
-import SearchBar from '@/components/SearchBar';
-import CategoryNav from '@/components/CategoryNav';
+import { SearchBar, CategoryNav } from '@/components/navigation';
 import { SymbolList } from '@/components/symbols';
 import { optimizeSymbolRendering, waitForFontsLoad } from '@/lib/font/fontUtils';
 

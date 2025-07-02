@@ -3,8 +3,7 @@
 import React from 'react';
 import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
 import HomeClient from '@/components/HomeClient';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import ErrorDisplay from '@/components/ErrorDisplay';
+import { LoadingSpinner, ErrorDisplay } from '@/components/ui';
 
 export default function EmojiPage() {
   const { symbols, categoryStats, loading, error } = useCachedSymbolData({
