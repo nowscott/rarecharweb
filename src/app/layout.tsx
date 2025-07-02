@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
-import "./globals.css";
+import "./styles/globals.css";
 import AppInitializer from '@/components/AppInitializer';
 import FontHealthChecker from '@/components/FontHealthChecker';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';

@@ -1,28 +1,5 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import React from 'react';
-import { useCachedSymbolData } from '@/hooks/useCachedSymbolData';
-import HomeClient from '@/components/HomeClient';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import ErrorDisplay from '@/components/ErrorDisplay';
-
-export default function Home() {
-  const { symbols, categoryStats, loading, error } = useCachedSymbolData({
-    dataType: 'symbol'
-  });
-
-  if (loading) {
-    return <LoadingSpinner message="加载符号中..." />;
-  }
-
-  if (error) {
-    return <ErrorDisplay message="符号加载失败" error={error} />;
-  }
-
-  return (
-    <HomeClient 
-      symbols={symbols} 
-      categoryStats={categoryStats} 
-    />
-  );
+export default function RootPage() {
+  redirect('/home');
 }
